@@ -1,10 +1,11 @@
 import * as React from "react";
+import kirk from "../avatars/kirk.jpg";
 
 export default () => {
     return (
         <article>
             <div className="input-container">
-                <img src={require("../styles/assets/kirk.jpg")} alt="kirk-headshot" height="110" width="110" />
+                <img src={kirk} alt="kirk-headshot" height="110" width="110" />
                 <div className="encrypt-order-input">
                     <h2>Kirk, encrypt your order:</h2>
                     <div className="form">

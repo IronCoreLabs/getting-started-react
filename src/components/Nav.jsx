@@ -1,10 +1,10 @@
 import * as React from "react";
-import Logo from "../styles/assets/Logo";
+import logo from "../logo.svg";
 
 export default () => {
     return (
         <nav>
-            <Logo height="60" width="60" />
+            <img src={logo} height="70" width="70" alt="" />
             <h1>IronCore Get Started</h1>
         </nav>
     );

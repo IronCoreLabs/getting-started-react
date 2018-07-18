@@ -1,11 +1,11 @@
 import * as React from "react";
+import kirk from "../avatars/kirk.jpg";
 
 export default () => {
     return (
         <article>
             <div className="input-container-decrypt">
-                {/* TODO: This needs to dynamically change based on which user we are currently acting under */}
-                <img src={require("../styles/assets/kirk.jpg")} alt="crew-member-headshot" height="110" width="110" id="crew-member-headshot" />
+                <img src={kirk} alt="crew-member-headshot" height="110" width="110" id="crew-member-headshot" />
                 <div className="decrypt-order-input">
                     <h2>Decrypt your order as:</h2>
                     <select id="crew-member">

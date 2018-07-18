@@ -2,7 +2,10 @@
     "name": "getting-started-react",
     "description": "Get started using IronWeb in a simple react example.",
     "scripts": {
-        "start": "webpack-dev-server --config webpack.config.js --colors --mode development"
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject"
     },
     "author": "IronCore Labs",
     "license": "MIT",
@@ -13,6 +16,7 @@
         "jsonwebtoken": "8.1.0",
         "react": "16.4.1",
         "react-dom": "16.4.1",
+        "react-scripts": "1.1.4",
         "whatwg-fetch": "2.0.3"
     },
     "devDependencies": {
@@ -23,6 +27,7 @@
         "babel-preset-stage-2": "^6.24.1",
         "css-loader": "^1.0.0",
         "eslint": "^4.19.1",
+        "eslint-config-react-app": "^2.1.0",
         "file-loader": "^1.1.11",
         "open-browser-webpack-plugin": "^0.0.5",
         "react-hot-loader": "^4.3.3",

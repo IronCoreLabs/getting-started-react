@@ -1,41 +1,51 @@
 import * as React from "react";
-import {css} from "emotion";
+import {connect} from "react-redux";
+import Paper from "./Paper";
+import {stylesListToClassNames} from "../lib/Utils";
 
-const rootStyles = css({
-    display: "flex",
-    marginTop: 5,
-});
-
-const cardStyles = css({
-    height: 110,
-    width: 125,
-    padding: 15,
-    margin: 10,
-    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.10)",
-    backgroundColor: "#fff",
-    position: "relative",
-    wordBreak: "break-word",
-    "& span": {
-        position: "absolute",
-        bottom: 2,
-        left: 2,
-        fontSize: 13,
+const classes = stylesListToClassNames({
+    root: {
+        marginTop: 5,
+        "& h2": {textAlign: "center"},
+    },
+    orderList: {
+        display: "flex",
+    },
+    orderTag: {
+        width: 0,
+        height: 0,
+        borderTop: "45px solid #64B5F6",
+        borderRight: "45px solid transparent",
     },
 });
 
-export default ({orders}) => {
-    const orderCards = orders.map((order) => {
+class OrderList extends React.Component {
+    getOrderMarkup(order) {
         let displayedData = order.data;
-        if (displayedData.length > 60) {
-            displayedData = displayedData.substring(0, 55) + "...";
+        if (displayedData.length > 150) {
+            displayedData = displayedData.substring(0, 145) + "...";
         }
         return (
-            <div key={order.documentID} className={cardStyles}>
-                <div>{displayedData}</div>
-                <span>{`ID: ${order.documentID}`}</span>
+            <Paper size={150} key={order.id} cornerTagIcon="fas fa-plus" cornerTagColor="#64B5F6">
+                {displayedData}
+            </Paper>
+        );
+    }
+
+    render() {
+        return (
+            <div className={classes.root}>
+                <h2>Away Team Orders</h2>
+                <div className={classes.orderList}>{this.props.orders.map(this.getOrderMarkup)}</div>
             </div>
         );
-    });
+    }
+}
 
-    return <div className={rootStyles}>{orderCards}</div>;
-};
+const mapStateToProps = (state) => ({
+    orders: Object.keys(state.orders)
+        .map((orderID) => state.orders[orderID])
+        .sort((a, b) => a.created > b.created),
+});
+
+export default connect(mapStateToProps)(OrderList);

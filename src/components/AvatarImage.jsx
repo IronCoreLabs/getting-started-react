@@ -1,12 +1,9 @@
 import * as React from "react";
 import {css} from "emotion";
 
-const avatarStyle = css({
-    borderRadius: "100%",
-    height: 80,
-    width: 80,
-});
+const avatarStyle = css({borderRadius: "100%"});
 
-export default ({src}) => {
-    return <img className={avatarStyle} src={src} alt="" />;
+export default ({src, size}) => {
+    size = size || 80;
+    return <img className={avatarStyle} src={src} height={size} width={size} alt="" />;
 };

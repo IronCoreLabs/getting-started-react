@@ -48,12 +48,18 @@ class NewOrderForm extends React.Component {
         super();
         this.state = {
             orderText: "",
+            savingOrder: false,
         };
     }
 
     submitNewOrder() {
-        this.props.createOrder(this.state.orderText);
-        this.setState({orderText: ""});
+        if (this.state.savingOrder) {
+            return;
+        }
+        this.setState({savingOrder: true});
+        this.props.createOrder(this.state.orderText, () => {
+            this.setState({savingOrder: false, orderText: ""});
+        });
     }
 
     updateOrderText(event) {
@@ -61,9 +67,10 @@ class NewOrderForm extends React.Component {
     }
 
     render() {
-        if (!this.props.isActiveUserGroupAdmin) {
+        if (!this.props.isActiveAwayTeamAdmin) {
             return null;
         }
+        const iconClasses = this.state.savingOrder ? "fas fa-spinner fa-spin" : "fas fa-broadcast-tower";
         return (
             <React.Fragment>
                 <h3 className={classes.headerText}>Add Away Team Order</h3>
@@ -84,7 +91,7 @@ class NewOrderForm extends React.Component {
                         value={this.state.orderText}
                     />
                     <button className={classes.button} onClick={this.submitNewOrder.bind(this)}>
-                        <i className={`${classes.buttonIcon} fas fa-broadcast-tower`} />
+                        <i className={`${classes.buttonIcon} ${iconClasses}`} />
                         Submit Order
                     </button>
                 </Paper>
@@ -94,7 +101,7 @@ class NewOrderForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    isActiveUserGroupAdmin: state.awayTeamGroup.admins.indexOf(state.activeUser.id) >= 0,
+    isActiveAwayTeamAdmin: state.awayTeam.admins.indexOf(state.activeUser.id) >= 0,
 });
 
 export default connect(

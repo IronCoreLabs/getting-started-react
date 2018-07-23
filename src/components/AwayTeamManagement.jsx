@@ -1,9 +1,10 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import Paper from "./Paper";
+import LoadingPlaceholder from "./LoadingPlaceholder";
 import AvatarHoverAction from "./AvatarHoverAction";
 import {Users, KIRK} from "../Constants";
-import {addMemberToAwayTeamGroup, removeMemberFromAwayTeamGroup} from "../actions/AwayTeamGroupActions";
+import {getAwayTeamIDs, addUserToAwayTeam, removeUserFromAwayTeam} from "../actions/AwayTeamActions";
 import {stylesListToClassNames} from "../lib/Utils";
 
 const classes = stylesListToClassNames({
@@ -36,33 +37,49 @@ const classes = stylesListToClassNames({
 });
 
 class AwayTeamManagement extends React.Component {
+    constructor(props) {
+        super(props);
+        //Set initial state to loading to load the initial list of users in the away team
+        this.state = {loading: true};
+        props.getAwayTeamIDs(() => {
+            this.setState({loading: false});
+        });
+    }
+
+    addUser(id) {
+        this.setState({loading: true});
+        this.props.addUserToAwayTeam(id, () => {
+            this.setState({loading: false});
+        });
+    }
+
+    removeUser(id) {
+        this.setState({loading: true});
+        this.props.removeUserFromAwayTeam(id, () => {
+            this.setState({loading: false});
+        });
+    }
+
     getCrewMemberList() {
         const crewList = Object.keys(Users)
             .map((userID) => Users[userID])
-            //Don't display users who are within the away-team group and also don't display Kirk as he's already the away team admin
+            //Don't display users who are within the away-team and also don't display Kirk as he's already the away team admin
             .filter((user) => this.props.awayTeamMembers.indexOf(user.id) === -1 && user.id !== KIRK)
             .sort((a, b) => a.id > b.id)
             .map((user) => (
-                <AvatarHoverAction
-                    key={user.id}
-                    src={user.img}
-                    iconClasses="fas fa-plus"
-                    iconColor="#00BCD4"
-                    clickAction={() => this.props.addMemberToAwayTeamGroup(user)}
-                />
+                <AvatarHoverAction key={user.id} src={user.img} iconClasses="fas fa-plus" iconColor="#00BCD4" clickAction={() => this.addUser(user)} />
             ));
         return <div className={classes.avatarList}>{crewList}</div>;
     }
 
-    getEmptyAwayTeamBox() {
-        return (
-            <div className={classes.emptyAvatarList}>
-                <div>Add crew members to the away team</div>
-            </div>
-        );
-    }
-
     getAwayTeamList() {
+        if (this.props.awayTeamMembers.length === 0) {
+            return (
+                <div className={classes.emptyAvatarList}>
+                    <div>Add crew members to the away team.</div>
+                </div>
+            );
+        }
         const awayTeam = this.props.awayTeamMembers
             .sort((a, b) => a > b)
             .map((user) => (
@@ -71,18 +88,19 @@ class AwayTeamManagement extends React.Component {
                     src={Users[user].img}
                     iconClasses="fas fa-times"
                     iconColor="#D51819"
-                    clickAction={() => this.props.removeMemberFromAwayTeamGroup(Users[user])}
+                    clickAction={() => this.removeUser(Users[user])}
                 />
             ));
-        if (awayTeam.length === 0) {
-            return this.getEmptyAwayTeamBox();
-        }
+
         return <div className={classes.avatarList}>{awayTeam}</div>;
     }
 
     render() {
-        if (!this.props.isActiveUserGroupAdmin) {
+        if (!this.props.isActiveAwayTeamAdmin) {
             return null;
+        }
+        if (this.state.loading) {
+            return <LoadingPlaceholder />;
         }
         return (
             <div>
@@ -107,11 +125,11 @@ class AwayTeamManagement extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    isActiveUserGroupAdmin: state.awayTeamGroup.admins.indexOf(state.activeUser.id) >= 0,
-    awayTeamMembers: state.awayTeamGroup.members,
+    isActiveAwayTeamAdmin: state.awayTeam.admins.indexOf(state.activeUser.id) >= 0,
+    awayTeamMembers: state.awayTeam.members,
 });
 
 export default connect(
     mapStateToProps,
-    {addMemberToAwayTeamGroup, removeMemberFromAwayTeamGroup}
+    {getAwayTeamIDs, addUserToAwayTeam, removeUserFromAwayTeam}
 )(AwayTeamManagement);

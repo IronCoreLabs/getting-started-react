@@ -14,7 +14,7 @@ const classes = stylesListToClassNames({
     },
 });
 
-export default ({children, size, cornerTagIcon, cornerTagColor}) => {
+export default ({children, size}) => {
     const fixedSize = size || "auto";
     const paperWithSize = css(classes.paper, {height: fixedSize, width: fixedSize});
 

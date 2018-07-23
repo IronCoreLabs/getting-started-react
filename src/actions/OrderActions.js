@@ -1,18 +1,35 @@
-import * as Utils from "../lib/Utils";
+import * as Api from "../lib/Api";
 
-export function createOrder(text) {
-    const newOrder = {
-        id: Math.random()
-            .toString(36)
-            .slice(2),
-        data: text,
-        created: Date.now(),
+/**
+ * List the orders available
+ */
+export function listOrders() {
+    return {
+        type: "LIST_ORDERS",
+        operation: Api.listOrders,
     };
+}
 
-    Utils.addOrderToStorage(newOrder);
+/**
+ * Get a specific order given it's ID
+ */
+export function getOrder(orderID, onComplete) {
+    return {
+        type: "GET_ORDER",
+        payload: orderID,
+        operation: Api.getOrder,
+        onComplete,
+    };
+}
 
+/**
+ * Create a new order given the text to create it with
+ */
+export function createOrder(text, onComplete) {
     return {
         type: "ADD_ORDER",
-        payload: newOrder,
+        payload: text,
+        operation: Api.createOrder,
+        onComplete,
     };
 }

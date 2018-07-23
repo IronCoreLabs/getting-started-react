@@ -73,10 +73,10 @@ class Header extends React.Component {
     }
 
     getUserRole(user) {
-        if (this.props.awayTeamGroup.admins[user.id]) {
+        if (this.props.awayTeam.admins[user.id]) {
             return "Away Team Admin";
         }
-        if (this.props.awayTeamGroup.members[user.id]) {
+        if (this.props.awayTeam.members[user.id]) {
             return "Away Team Member";
         }
         return "";
@@ -117,7 +117,7 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => ({
     activeUser: state.activeUser,
-    awayTeamGroup: state.awayTeamGroup,
+    awayTeam: state.awayTeam,
 });
 
 export default connect(

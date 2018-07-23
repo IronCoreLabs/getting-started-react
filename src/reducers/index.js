@@ -1,11 +1,11 @@
 import {combineReducers} from "redux";
 
 import activeUser from "./ActiveUserReducer";
-import awayTeamGroup from "./AwayTeamGroupReducer";
+import awayTeam from "./AwayTeamReducer";
 import orders from "./OrdersReducer";
 
 export default combineReducers({
     activeUser,
-    awayTeamGroup,
+    awayTeam,
     orders,
 });

@@ -14,8 +14,26 @@ menu, nav, output, ruby, section, summary, time, mark, audio, video {
 article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+html,
+body {
+    height: 100%;
+}
 body {
     line-height: 1;
+    font-family: "Roboto", "Sans Serif";
+    font-weight: 300;
+}
+h1 {
+    font-size: 26px;
+    margin-bottom: 5px;
+}
+h2 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+h3 {
+    font-size: 22px;
+    margin-bottom: 5px;
 }
 ol,
 ul {
@@ -35,4 +53,16 @@ q:after {
 table {
     border-collapse: collapse;
     border-spacing: 0;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+#root header {
+    flex: 0 1 auto;
+}
+#root main {
+    flex: 1 1 auto;
 }

@@ -1,22 +1,43 @@
 import * as React from "react";
-import Nav from "./components/Nav";
-import OrderEncrypt from "./components/OrderEncrypt";
-import AwayTeamSelection from "./components/AwayTeamSelection";
-import OrderDecryption from "./components/OrderDecryption";
+import {css} from "emotion";
+import Header from "./components/Header";
+import OrderList from "./components/OrderList";
+import NewOrderForm from "./components/NewOrderForm";
+import AwayTeamManagement from "./components/AwayTeamManagement";
+
+const mainStyles = css({
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#F6F8FA",
+    "& h1": {
+        margin: 20,
+    },
+});
+
+const panelSections = css({
+    marginTop: 40,
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-around",
+});
 
 export default class App extends React.Component {
     render() {
         return (
-            <main>
-                <Nav />
-                <section>
-                    <OrderEncrypt />
-                    <AwayTeamSelection />
-                    <OrderDecryption />
-                </section>
-                <pre id="logger" />
-                <div id="loadbar" />
-            </main>
+            <React.Fragment>
+                <Header />
+                <main className={mainStyles}>
+                    <h1>Welcome to the Enterprise Messaging System</h1>
+                    <div className={panelSections}>
+                        <div>
+                            <OrderList />
+                            <NewOrderForm />
+                        </div>
+                        <AwayTeamManagement />
+                    </div>
+                </main>
+            </React.Fragment>
         );
     }
 }

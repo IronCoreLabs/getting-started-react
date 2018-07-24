@@ -22,9 +22,8 @@ const classes = stylesListToClassNames({
         flexDirection: "column",
         borderBottom: "1px solid #ccc",
         cursor: "pointer",
-        "&:hover": {
-            backgroundColor: "#ddd",
-        },
+        "&:last-child": {borderBottom: "none"},
+        "&:hover": {backgroundColor: "#ddd"},
     },
     orderHeader: {
         display: "flex",

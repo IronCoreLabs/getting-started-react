@@ -1,7 +1,6 @@
-import {KIRK} from "../Constants";
-
 const defaultState = {
-    admins: [KIRK],
+    id: null,
+    admins: [],
     members: [],
 };
 
@@ -9,11 +8,12 @@ const defaultState = {
  * Away Team management reducer. Keeps track of which users are members and admins of the away-team
  */
 export default function(state = defaultState, action) {
-    if (action.type === "AWAY_TEAM_LIST") {
-        // Set the list of members to the contents of the action payload
+    if (action.type === "SET_AWAY_TEAM") {
+        //Set initial details about the away team
         return {
-            ...state,
-            members: action.payload,
+            id: action.payload.groupID,
+            admins: action.payload.groupAdmins,
+            members: action.payload.groupMembers,
         };
     }
     if (action.type === "ADD_USER_TO_AWAY_TEAM") {

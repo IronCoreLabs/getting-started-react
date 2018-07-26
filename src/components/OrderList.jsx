@@ -10,13 +10,17 @@ const classes = stylesListToClassNames({
         textAlign: "center",
         marginTop: 25,
     },
-    orderList: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignContent: "stretch",
+    listWarning: {
+        maxWidth: 525,
+        color: "#fefefe",
+        lineHeight: 1.125,
+        padding: "10px 15px",
+        textAlign: "center",
+        backgroundColor: "#00BCD4",
+        margin: "30px 0",
     },
     orderRow: {
+        minWidth: 400,
         padding: "15px 7px",
         display: "flex",
         flexDirection: "column",
@@ -38,7 +42,6 @@ const classes = stylesListToClassNames({
         alignItems: "center",
         justifyContent: "center",
         fontSize: 18,
-        width: 400,
         height: 235,
         border: "3px dashed #ccc",
         marginTop: 10,
@@ -55,6 +58,24 @@ class OrderList extends React.Component {
         };
     }
 
+    /**
+     * Prop updates to determine if we should clear the loading and/or currently expanded order row
+     */
+    componentWillReceiveProps(nextProps) {
+        //If we've loaded the data for the current expanded row, clear the loading state
+        if (this.state.expandedRow && typeof nextProps.orders[this.state.expandedRow].data === "string") {
+            this.setState({loadingRow: false});
+        }
+        //If the currently logged in user changes, reset the currently expanded row
+        if (nextProps.activeUser !== this.props.activeUser) {
+            this.setState({expandedRow: null});
+        }
+    }
+
+    /**
+     * Order row click handler. Checks if we've already loaded this data to display. If not, makes a request to
+     * the API to load the order content.
+     */
     expandRow(orderID) {
         //If the user is collapsing this order, just clear out the expandedRow state
         if (this.state.expandedRow === orderID) {
@@ -66,11 +87,12 @@ class OrderList extends React.Component {
         }
         //Otherwise, set a loading indicator and request the order
         this.setState({expandedRow: orderID, loadingRow: true});
-        this.props.getOrder(orderID, () => {
-            this.setState({loadingRow: false});
-        });
+        this.props.getOrder(orderID, () => this.setState({loadingRow: false, expandedRow: null}));
     }
 
+    /**
+     * Conditionally return the order body content depending on whether the data needs to be loaded first
+     */
     getOrderBody(order) {
         if (this.state.expandedRow === null || this.state.expandedRow !== order.id) {
             return null;
@@ -81,6 +103,28 @@ class OrderList extends React.Component {
         return <div className={classes.orderBody}>{order.data}</div>;
     }
 
+    /**
+     * Display a warning above the order list if the current logged in user isn't part of the away team group
+     */
+    getWarningHeader() {
+        if (this.props.isActiveUserInGroup) {
+            return null;
+        }
+        return (
+            <div className={classes.listWarning}>
+                The currently logged in user is not part of the Away Team. That would normally mean that the orders wouldn't be visible to the current user.
+                This is usually enforced via access control code to restrict view access.
+                <br />
+                <br />
+                However, to show the extra layer of security that is provided via IronCore we'll display the list of orders and prove how even if they could be
+                retrieved, the orders that are encrypted are still safe as they cannot be decyrpted by the current user.
+            </div>
+        );
+    }
+
+    /**
+     * Get list of orders and display them as individual rows
+     */
     getAwayTeamOrders() {
         const ordersArray = Object.keys(this.props.orders)
             .map((orderID) => this.props.orders[orderID])
@@ -110,7 +154,8 @@ class OrderList extends React.Component {
         return (
             <React.Fragment>
                 <h3 className={classes.headerText}>Away Team Orders</h3>
-                <Paper className={classes.orderList}>{this.getAwayTeamOrders()}</Paper>
+                {this.getWarningHeader()}
+                <Paper>{this.getAwayTeamOrders()}</Paper>
             </React.Fragment>
         );
     }
@@ -118,6 +163,8 @@ class OrderList extends React.Component {
 
 const mapStateToProps = (state) => ({
     orders: state.orders,
+    activeUser: state.activeUser,
+    isActiveUserInGroup: state.awayTeam.members.indexOf(state.activeUser.id) > -1,
 });
 
 export default connect(

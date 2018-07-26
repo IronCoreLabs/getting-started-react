@@ -2,7 +2,7 @@
     "name": "getting-started-react",
     "description": "Get started using IronWeb in a simple react example.",
     "scripts": {
-        "start": "react-scripts start",
+        "start": "node src/server.js &! react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject"
@@ -11,16 +11,17 @@
     "license": "MIT",
     "private": true,
     "dependencies": {
-        "@ironcorelabs/ironweb": "1.0.5",
+        "@ironcorelabs/ironweb": "^1.0.5",
         "emotion": "^9.2.6",
-        "es6-promise": "4.2.4",
-        "jsonwebtoken": "8.1.0",
+        "es6-promise": "^4.2.4",
+        "jsonwebtoken": "^8.3.0",
         "react": "16.4.1",
         "react-dom": "16.4.1",
         "react-redux": "^5.0.7",
         "react-scripts": "1.1.4",
         "redux": "^4.0.0",
-        "whatwg-fetch": "2.0.3"
+        "redux-thunk": "^2.3.0",
+        "whatwg-fetch": "^2.0.4"
     },
     "prettier": {
         "printWidth": 160,

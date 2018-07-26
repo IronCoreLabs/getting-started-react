@@ -1,7 +1,7 @@
 import * as Api from "../lib/Api";
 
 /**
- * List the orders available
+ * List the orders available.
  */
 export function listOrders() {
     return {
@@ -11,25 +11,25 @@ export function listOrders() {
 }
 
 /**
- * Get a specific order given it's ID
+ * Get a specific order given it's ID.
  */
-export function getOrder(orderID, onComplete) {
+export function getOrder(orderID, onFail) {
     return {
         type: "GET_ORDER",
         payload: orderID,
         operation: Api.getOrder,
-        onComplete,
+        onFail,
     };
 }
 
 /**
- * Create a new order given the text to create it with
+ * Create a new order given the text with which to create it.
  */
-export function createOrder(text, onComplete) {
+export function createOrder(text, onFail) {
     return {
         type: "ADD_ORDER",
         payload: text,
         operation: Api.createOrder,
-        onComplete,
+        onFail,
     };
 }

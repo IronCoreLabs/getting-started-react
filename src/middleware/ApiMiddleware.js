@@ -1,8 +1,7 @@
 /**
  * Redux middleware function that is responsible for kicking off API requests and dispatches an action once the
- * Promise has resolve successfully.
+ * Promise has resolved successfully.
  */
-
 export default (store) => (next) => (action) => {
     if (typeof action.operation === "function") {
         //Get the arguments to invoke the operation with into an array so we can use the spread syntax
@@ -10,13 +9,16 @@ export default (store) => (next) => (action) => {
         action
             .operation(...operationArguments)
             .then((result) => {
-                next({type: action.type, payload: result});
-                if (action.onComplete) {
-                    action.onComplete();
+                next({...action, type: action.type, payload: result});
+                if (action.onSuccess) {
+                    action.onSuccess();
                 }
             })
             .catch((e) => {
                 console.error(e);
+                if (action.onFail) {
+                    action.onFail();
+                }
             });
     } else {
         //If this isn't an API operation, just bypass this middleware and hand it to the next one

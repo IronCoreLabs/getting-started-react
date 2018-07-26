@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import Paper from "./Paper";
 import {createOrder} from "../actions/OrderActions";
 import {stylesListToClassNames} from "../lib/Utils";
+import showSnackbar from "../lib/Snackbar";
 
 const classes = stylesListToClassNames({
     headerText: {
@@ -52,16 +53,28 @@ class NewOrderForm extends React.Component {
         };
     }
 
+    /**
+     * Submit a new order. Does nothing if another order is currently being submitted or
+     * the user hasn't entered any order text.
+     */
     submitNewOrder() {
-        if (this.state.savingOrder) {
+        if (this.state.savingOrder || !this.state.orderText.trim()) {
             return;
         }
         this.setState({savingOrder: true});
-        this.props.createOrder(this.state.orderText, () => {
-            this.setState({savingOrder: false, orderText: ""});
-        });
+        this.props.createOrder(
+            this.state.orderText.trim(),
+            () => {
+                this.setState({savingOrder: false, orderText: ""});
+                showSnackbar("New order created successfully");
+            },
+            () => this.setState({savingOrder: false})
+        );
     }
 
+    /**
+     * Keep order text mirrored in state and update its value.
+     */
     updateOrderText(event) {
         this.setState({orderText: event.target.value});
     }

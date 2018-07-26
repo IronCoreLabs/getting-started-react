@@ -6,13 +6,13 @@ import chekov from "./avatars/chekov.jpg";
 import kirk from "./avatars/kirk.jpg";
 import uhura from "./avatars/uhura.jpg";
 
-export const KIRK = 1;
-export const MCCOY = 2;
-export const SULU = 3;
-export const CHEKOV = 4;
-export const SPOCK = 5;
-export const UHURA = 6;
-export const REDSHIRT = 7;
+export const KIRK = "550";
+export const MCCOY = "551";
+export const SULU = "552";
+export const CHEKOV = "553";
+export const SPOCK = "554";
+export const UHURA = "555";
+export const REDSHIRT = "556";
 
 export const Users = {
     [KIRK]: {

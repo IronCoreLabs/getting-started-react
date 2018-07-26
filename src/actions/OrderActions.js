@@ -25,11 +25,12 @@ export function getOrder(orderID, onFail) {
 /**
  * Create a new order given the text with which to create it.
  */
-export function createOrder(text, onFail) {
+export function createOrder(text, onSuccess, onFail) {
     return {
         type: "ADD_ORDER",
         payload: text,
         operation: Api.createOrder,
+        onSuccess,
         onFail,
     };
 }

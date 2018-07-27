@@ -4,33 +4,33 @@ import {stylesListToClassNames} from "../lib/Utils";
 
 const classes = stylesListToClassNames({
     root: {
-        height: 110,
-        width: 110,
         cursor: "pointer",
         borderRadius: "100%",
         overflow: "hidden",
-        "&:hover > div": {
-            opacity: 0.75,
-        },
     },
     overlay: {
         background: "rgba(0,0,0,0.7)",
         textAlign: "center",
-        padding: "33px 0 43px 1px",
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         opacity: 0,
         transition: "opacity 0.3s ease",
     },
 });
 
-export default ({src, iconClasses, clickAction, iconColor}) => {
-    const backgroundImage = css({background: `url(${src}) 0 0 no-repeat`, backgroundSize: "cover"});
-    const icon = css({color: iconColor});
+export default ({src, iconClasses, clickAction, iconColor, loading, size}) => {
+    size = size || 110;
+    const backgroundImage = css({background: `url(${src}) 0 0 no-repeat`, backgroundSize: "cover", height: size, width: size});
+    const iconStyle = css({color: iconColor});
+
+    const icon = loading ? <i className={`${iconStyle} fas fa-spinner fa-spin fa-3x`} /> : <i className={`${iconStyle} ${iconClasses} fa-3x`} />;
+    const overlayStyles = loading ? css({opacity: 0.75}) : iconClasses ? css({"&:hover": {opacity: 0.75}}) : "";
 
     return (
         <div className={`${classes.root} ${backgroundImage}`} onClick={clickAction}>
-            <div className={classes.overlay}>
-                <i className={`${icon} ${iconClasses} fa-3x`} />
-            </div>
+            <div className={`${classes.overlay} ${overlayStyles}`}>{icon}</div>
         </div>
     );
 };

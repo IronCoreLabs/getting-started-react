@@ -1,7 +1,7 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import logo from "../logo.svg";
-import AvatarImage from "./AvatarImage";
+import logo from "../logo-white.svg";
+import AvatarHoverAction from "./AvatarHoverAction";
 import {Users} from "../Constants";
 import {changeActiveUser} from "../actions/UserActions";
 import {stylesListToClassNames} from "../lib/Utils";
@@ -24,7 +24,7 @@ const classes = stylesListToClassNames({
         "& > div": {position: "relative"},
     },
     dropdown: {
-        minWidth: 180,
+        minWidth: 280,
         display: "none",
         position: "absolute",
         right: 0,
@@ -35,6 +35,12 @@ const classes = stylesListToClassNames({
         zIndex: 10,
     },
     dropdownShow: {display: "block"},
+    loginText: {
+        fontSize: 20,
+        padding: "10px 15px",
+        color: "#777",
+        fontWeight: 400,
+    },
     dropdownUser: {
         display: "flex",
         alignItems: "center",
@@ -44,7 +50,23 @@ const classes = stylesListToClassNames({
         textAlign: "right",
         "&:hover": {backgroundColor: "#eee"},
     },
-    userName: {fontWeight: "bold", fontSize: 16, marginBottom: 5},
+    userInfo: {
+        display: "flex",
+        alignItems: "center",
+        textAlign: "left",
+    },
+    userText: {marginLeft: 15},
+    userName: {
+        fontSize: 16,
+        fontWeight: 400,
+        marginBottom: 5,
+    },
+    userRole: {
+        fontSize: 14,
+        fontWeight: 400,
+        color: "#777",
+    },
+    chevron: {color: "#ccc"},
 });
 
 class Header extends React.Component {
@@ -52,51 +74,81 @@ class Header extends React.Component {
         super();
         this.state = {
             dropdownOpen: false,
+            changingUserID: null,
         };
     }
 
+    /**
+     * Add background click listener to close dropdown when user clicks outside it.
+     */
     componentDidMount() {
         window.addEventListener("click", () => {
             this.setState({dropdownOpen: false});
         });
     }
 
-    toggleDropdown(event) {
+    /**
+     * Display the user selection dropdown.
+     */
+    showDropdown(event) {
         event.stopPropagation();
         this.setState({dropdownOpen: true});
     }
 
+    /**
+     * Click handler for when user is changing who the currently authed user is.
+     */
     changeUser(user, event) {
         event.stopPropagation();
-        this.setState({dropdownOpen: false});
-        this.props.changeActiveUser(user);
+        this.setState({changingUserID: user.id});
+        this.props.changeActiveUser(user, () => {
+            this.setState({dropdownOpen: false, changingUserID: null});
+        });
     }
 
+    /**
+     * Get a users role text to display next to their avatar in the user list.
+     */
     getUserRole(user) {
-        if (this.props.awayTeam.admins[user.id]) {
+        if (this.props.awayTeam.admins.indexOf(user.id) > -1) {
             return "Away Team Admin";
         }
-        if (this.props.awayTeam.members[user.id]) {
+        if (this.props.awayTeam.members.indexOf(user.id) > -1) {
             return "Away Team Member";
         }
         return "";
     }
 
+    /**
+     * Get markup for user dropdown content.
+     */
     getDropDownMarkup() {
         const users = Object.keys(Users)
             .map((user) => Users[user])
             .filter((user) => user.id !== this.props.activeUser.id)
             .sort((a, b) => a.id > b.id);
 
-        return users.map((user) => (
+        const crewList = users.map((user) => (
             <div key={user.id} className={classes.dropdownUser} onClick={this.changeUser.bind(this, user)}>
-                <AvatarImage src={user.img} size={60} />
-                <div>
-                    <div className={classes.userName}>{user.name}</div>
-                    {this.getUserRole(user)}
+                <div className={classes.userInfo}>
+                    <AvatarHoverAction src={user.img} size={60} loading={this.state.changingUserID === user.id} iconColor="#00BCD4" />
+                    <div className={classes.userText}>
+                        <div className={classes.userName}>{user.name}</div>
+                        <div className={classes.userRole}>{this.getUserRole(user)}</div>
+                    </div>
+                </div>
+                <div className={classes.chevron}>
+                    <i className="fas fa-chevron-right fa-2x" />
                 </div>
             </div>
         ));
+
+        return (
+            <React.Fragment>
+                <div className={classes.loginText}>Login As: </div>
+                {crewList}
+            </React.Fragment>
+        );
     }
 
     render() {
@@ -104,9 +156,9 @@ class Header extends React.Component {
             <header className={classes.nav}>
                 <img src={logo} height="70" width="70" alt="" />
                 <span>IronCore Get Started</span>
-                <div className={classes.activeUser} onClick={this.toggleDropdown.bind(this)}>
+                <div className={classes.activeUser} onClick={this.showDropdown.bind(this)}>
                     <div>
-                        <AvatarImage src={this.props.activeUser.img} />
+                        <AvatarHoverAction src={this.props.activeUser.img} size={80} />
                         <div className={`${classes.dropdown} ${this.state.dropdownOpen ? classes.dropdownShow : ""}`}>{this.getDropDownMarkup()}</div>
                     </div>
                 </div>

@@ -9,7 +9,6 @@ const classes = stylesListToClassNames({
         flexDirection: "column",
         padding: 0,
     },
-    loadingText: {paddingTop: 10},
 });
 
 /**

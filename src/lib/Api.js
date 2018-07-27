@@ -6,7 +6,6 @@
  */
 
 const ORDER_STORAGE_KEY = "ironcore-orders";
-const AWAY_TEAM_MEMBER_STORAGE_KEY = "ironcore-away-team";
 
 /**
  * Generic method for adding a new item to a local storage array by the provided key
@@ -69,63 +68,17 @@ export function getOrder(orderID) {
 /**
  * Add order to list of orders in local storage
  */
-export function createOrder(orderText) {
+export function createOrder(order) {
     return new Promise((resolve) => {
         const newOrder = {
+            //Just create a random ID to assign to this order
             id: Math.random()
                 .toString(36)
                 .slice(2),
-            data: orderText,
+            data: order,
             created: Date.now(),
         };
         addItemToLocalStorageArray(ORDER_STORAGE_KEY, newOrder, resolve);
         resolve(newOrder);
-    });
-}
-
-/**
- * Get list of orders from local storage
- */
-export function getAwayTeamIDs() {
-    return new Promise((resolve) => {
-        try {
-            const userIDs = localStorage.getItem(AWAY_TEAM_MEMBER_STORAGE_KEY);
-            if (userIDs) {
-                return resolve(JSON.parse(userIDs));
-            }
-            resolve([]);
-        } catch (e) {
-            resolve([]);
-        }
-    });
-}
-
-/**
- * Add provided user ID to list of users in away team in local storage
- */
-export function addUserToAwayTeam(userID) {
-    return new Promise((resolve) => {
-        addItemToLocalStorageArray(AWAY_TEAM_MEMBER_STORAGE_KEY, userID);
-        resolve(userID);
-    });
-}
-
-/**
- * Remove provided user ID from list of users in away team in local storage
- */
-export function removeUserFromAwayTeam(userID) {
-    return new Promise((resolve, reject) => {
-        const awayTeamJSON = localStorage.getItem(AWAY_TEAM_MEMBER_STORAGE_KEY);
-        if (!awayTeamJSON) {
-            return resolve(userID);
-        }
-        try {
-            const users = JSON.parse(awayTeamJSON);
-            localStorage.setItem(AWAY_TEAM_MEMBER_STORAGE_KEY, JSON.stringify(users.filter((user) => user !== userID)));
-        } catch (e) {
-            //If JSON parsing the user list fails, just clear the entire key
-            localStorage.removeItem(AWAY_TEAM_MEMBER_STORAGE_KEY);
-        }
-        resolve(userID);
     });
 }

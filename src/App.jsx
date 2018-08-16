@@ -26,6 +26,7 @@ const classes = stylesListToClassNames({
         display: "flex",
         justifyContent: "space-around",
     },
+    orderSection: {minWidth: 550},
     loaderWrapper: {
         display: "flex",
         justifyContent: "center",
@@ -84,7 +85,7 @@ export class App extends React.Component {
                 <main className={classes.main}>
                     <h1>Welcome to the Enterprise Messaging System</h1>
                     <div className={classes.panelSections}>
-                        <div>
+                        <div className={classes.orderSection}>
                             <OrderList />
                             <NewOrderForm />
                         </div>

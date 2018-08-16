@@ -2,10 +2,8 @@
     "name": "getting-started-react",
     "description": "Get started using IronWeb in a simple react example.",
     "scripts": {
-        "start": "node src/server.js &! react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test --env=jsdom",
-        "eject": "react-scripts eject"
+        "insecure": "node src/server.js &! react-scripts start",
+        "secure": "node src/server.js &! REACT_APP_SECURE=true react-scripts start"
     },
     "author": "IronCore Labs",
     "license": "MIT",
@@ -15,8 +13,8 @@
         "emotion": "^9.2.6",
         "es6-promise": "^4.2.4",
         "jsonwebtoken": "^8.3.0",
-        "react": "16.4.1",
-        "react-dom": "16.4.1",
+        "react": "16.4.2",
+        "react-dom": "16.4.2",
         "react-redux": "^5.0.7",
         "react-scripts": "1.1.4",
         "redux": "^4.0.0",

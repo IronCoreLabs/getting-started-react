@@ -2,7 +2,9 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {listOrders, getOrder} from "../actions/OrderActions";
 import Paper from "./Paper";
+import insignia from "../avatars/insignia.png";
 import LoadingPlaceholder from "./LoadingPlaceholder";
+import AvatarHoverAction from "./AvatarHoverAction";
 import {stylesListToClassNames} from "../lib/Utils";
 
 const classes = stylesListToClassNames({
@@ -20,7 +22,7 @@ const classes = stylesListToClassNames({
         margin: "30px 0",
     },
     orderRow: {
-        minWidth: 400,
+        width: 500,
         padding: "15px 7px",
         display: "flex",
         flexDirection: "column",
@@ -30,8 +32,17 @@ const classes = stylesListToClassNames({
         "&:hover": {backgroundColor: "#ddd"},
     },
     orderHeader: {
+        position: "relative",
         display: "flex",
-        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    todoTitle: {
+        fontWeight: "bold",
+        marginLeft: 20,
+    },
+    timestamp: {
+        position: "absolute",
+        right: 0,
     },
     orderBody: {
         marginTop: 20,
@@ -54,7 +65,7 @@ class OrderList extends React.Component {
         props.listOrders();
         this.state = {
             loadingRow: false,
-            expandedRow: null,
+            expandedRow: "",
         };
     }
 
@@ -63,7 +74,7 @@ class OrderList extends React.Component {
      */
     componentWillReceiveProps(nextProps) {
         //If we've loaded the data for the current expanded row, clear the loading state
-        if (this.state.expandedRow && typeof nextProps.orders[this.state.expandedRow].data === "string") {
+        if (this.state.expandedRow && typeof nextProps.orders[this.state.expandedRow].body === "string") {
             this.setState({loadingRow: false});
         }
         //If the currently logged in user changes, reset the currently expanded row
@@ -82,7 +93,7 @@ class OrderList extends React.Component {
             return this.setState({expandedRow: null});
         }
         //If the data has already been loaded, just display it
-        if (typeof this.props.orders[orderID].data === "string") {
+        if (typeof this.props.orders[orderID].body === "string") {
             return this.setState({expandedRow: orderID});
         }
         //Otherwise, set a loading indicator and request the order
@@ -97,10 +108,7 @@ class OrderList extends React.Component {
         if (this.state.expandedRow === null || this.state.expandedRow !== order.id) {
             return null;
         }
-        if (this.state.loadingRow) {
-            return <LoadingPlaceholder />;
-        }
-        return <div className={classes.orderBody}>{order.data}</div>;
+        return <div className={classes.orderBody}>{this.state.loadingRow ? <LoadingPlaceholder /> : order.body}</div>;
     }
 
     /**
@@ -141,8 +149,9 @@ class OrderList extends React.Component {
             return (
                 <div key={order.id} className={classes.orderRow} onClick={() => this.expandRow(order.id)}>
                     <div className={classes.orderHeader}>
-                        <div>To: Away Team</div>
-                        <div>{new Date(order.created).toLocaleTimeString()}</div>
+                        <AvatarHoverAction src={insignia} size={45} />
+                        <div className={classes.todoTitle}>{order.title}</div>
+                        <div className={classes.timestamp}>{new Date(order.created).toLocaleTimeString()}</div>
                     </div>
                     {this.getOrderBody(order)}
                 </div>

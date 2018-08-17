@@ -28,7 +28,7 @@ export default function(state = defaultState, action) {
     if (action.type === "SWITCH_USER") {
         //When switching users, remove all data from the list of orders
         return Object.keys(state).reduce((orders, orderID) => {
-            const {data, ...sansData} = state[orderID];
+            const {body, ...sansData} = state[orderID];
             orders[orderID] = sansData;
             return orders;
         }, {});

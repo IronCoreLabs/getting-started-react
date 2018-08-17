@@ -4,10 +4,8 @@
  */
 export default (store) => (next) => (action) => {
     if (typeof action.operation === "function") {
-        //Get the arguments to invoke the operation with into an array so we can use the spread syntax
-        const operationArguments = action.payload ? (Array.isArray(action.payload) ? action.payload : [action.payload]) : [];
         action
-            .operation(...operationArguments)
+            .operation(action.payload)
             .then((result) => {
                 next({...action, type: action.type, payload: result});
                 if (action.onSuccess) {

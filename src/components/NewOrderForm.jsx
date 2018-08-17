@@ -22,14 +22,14 @@ const classes = stylesListToClassNames({
             padding: "0 7px",
         },
     },
-    textarea: {
-        display: "block",
-        margin: "20px 0",
-        width: 400,
+    genericInput: {
+        width: "85%",
+        fontSize: 18,
         padding: 7,
         border: "1px solid #D9D9D9",
         borderLeft: "3px solid #F44336",
-        fontSize: 18,
+        margin: "15px 0",
+        display: "block",
     },
     button: {
         background: "#F44336",
@@ -48,7 +48,8 @@ class NewOrderForm extends React.Component {
     constructor() {
         super();
         this.state = {
-            orderText: "",
+            orderTitle: "",
+            orderBody: "",
             savingOrder: false,
         };
     }
@@ -58,14 +59,15 @@ class NewOrderForm extends React.Component {
      * the user hasn't entered any order text.
      */
     submitNewOrder() {
-        if (this.state.savingOrder || !this.state.orderText.trim()) {
+        if (this.state.savingOrder || !this.state.orderTitle.trim() || !this.state.orderBody.trim()) {
             return;
         }
         this.setState({savingOrder: true});
         this.props.createOrder(
-            this.state.orderText.trim(),
+            this.state.orderTitle.trim(),
+            this.state.orderBody.trim(),
             () => {
-                this.setState({savingOrder: false, orderText: ""});
+                this.setState({savingOrder: false, orderTitle: "", orderBody: ""});
                 showSnackbar("New order created successfully");
             },
             () => this.setState({savingOrder: false})
@@ -73,10 +75,17 @@ class NewOrderForm extends React.Component {
     }
 
     /**
-     * Keep order text mirrored in state and update its value.
+     * Keep order title mirrored in state and update its value.
      */
-    updateOrderText(event) {
-        this.setState({orderText: event.target.value});
+    updateOrderTitle(event) {
+        this.setState({orderTitle: event.target.value});
+    }
+
+    /**
+     * Keep order body mirrored in state and update its value.
+     */
+    updateOrderBody(event) {
+        this.setState({orderBody: event.target.value});
     }
 
     render() {
@@ -96,12 +105,19 @@ class NewOrderForm extends React.Component {
                         <div>To:</div>
                         <div>Away Team</div>
                     </div>
+                    <input
+                        className={classes.genericInput}
+                        type="text"
+                        placeholder="Order Title"
+                        value={this.state.orderTitle}
+                        onChange={this.updateOrderTitle.bind(this)}
+                    />
                     <textarea
-                        className={classes.textarea}
-                        placeholder="Enter your order..."
+                        className={`${classes.textarea} ${classes.genericInput}`}
+                        placeholder="Enter your order message..."
                         rows={6}
-                        onChange={this.updateOrderText.bind(this)}
-                        value={this.state.orderText}
+                        onChange={this.updateOrderBody.bind(this)}
+                        value={this.state.orderBody}
                     />
                     <button className={classes.button} onClick={this.submitNewOrder.bind(this)}>
                         <i className={`${classes.buttonIcon} ${iconClasses}`} />

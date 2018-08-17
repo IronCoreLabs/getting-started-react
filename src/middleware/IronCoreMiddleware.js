@@ -6,11 +6,11 @@ import showSnackbar from "../lib/Snackbar";
  */
 function encryptNewOrder(next, action, awayTeamID) {
     return IronWeb.document
-        .encrypt(IronWeb.codec.utf8.toBytes(action.payload), {accessList: {groups: [{id: awayTeamID}]}})
+        .encrypt(IronWeb.codec.utf8.toBytes(action.payload.body), {accessList: {groups: [{id: awayTeamID}]}})
         .then((encryptedDoc) => {
             next({
                 ...action,
-                payload: {content: encryptedDoc.document, id: encryptedDoc.documentID},
+                payload: {...action.payload, body: encryptedDoc.document, id: encryptedDoc.documentID, encrypted: true},
             });
         })
         .catch((e) => {
@@ -26,14 +26,11 @@ function encryptNewOrder(next, action, awayTeamID) {
  */
 function decryptOrder(next, action) {
     IronWeb.document
-        .decrypt(action.payload.data.id, action.payload.data.content)
+        .decrypt(action.payload.id, action.payload.body)
         .then((decryptedDoc) => {
             next({
                 ...action,
-                payload: {
-                    ...action.payload,
-                    data: IronWeb.codec.utf8.fromBytes(decryptedDoc.data),
-                },
+                payload: {...action.payload, body: IronWeb.codec.utf8.fromBytes(decryptedDoc.data)},
             });
         })
         .catch((e) => {
@@ -68,11 +65,11 @@ export const decryptionMiddleware = (state) => (next) => (action) => {
         //When we get an action for a new order we need to conditionally decrypt it if the data is encrypted. If this
         //order was created prior to encryption, we just want to pass it along. Otherwise we want to decrypt it and pass
         //along an action with the decrypted data.
-        if (typeof action.payload.data === "string") {
-            return next(action);
+        if (action.payload.encrypted) {
+            //Data is encrypted, decrypt, and then modify the action content with the decrypted content before dispatching
+            return decryptOrder(next, action);
         }
-        //Data is encrypted, decrypt, and then modify the action content with the decrypted content before dispatching
-        return decryptOrder(next, action);
+        return next(action);
     }
     next(action);
 };

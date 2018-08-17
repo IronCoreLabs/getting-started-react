@@ -36,8 +36,8 @@ export function listOrders() {
                 //No orders yet, just resolve with an empty array
                 return resolve([]);
             }
-            //Resolve the promise with the list of orders with just the ID and date created
-            resolve(JSON.parse(orders).map(({id, created}) => ({id, created})));
+            //Resolve the promise with the list of orders with just the ID, title, and date created
+            resolve(JSON.parse(orders).map(({id, created, title}) => ({id, created, title})));
         } catch (e) {
             resolve([]);
         }
@@ -71,13 +71,15 @@ export function getOrder(orderID) {
 export function createOrder(order) {
     return new Promise((resolve) => {
         const newOrder = {
-            //Just create a random ID to assign to this order
-            id: Math.random()
-                .toString(36)
-                .slice(2),
-            data: order,
+            ...order,
             created: Date.now(),
         };
+        //Just create a random ID to assign to this order if it doens't already have one
+        if (!newOrder.id) {
+            newOrder.id = Math.random()
+                .toString(36)
+                .slice(2);
+        }
         addItemToLocalStorageArray(ORDER_STORAGE_KEY, newOrder, resolve);
         resolve(newOrder);
     });

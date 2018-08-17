@@ -1,13 +1,18 @@
 {
     "name": "getting-started-react",
-    "description": "Get started using IronWeb in a simple react example.",
+    "version": "1.0.0",
+    "description": "Get started with IronCore to learn how to grant, monitor and revoke access to sensitive data from a ReactJS application.",
+    "author": "IronCore Labs",
+    "homepage": "https://github.com/IronCoreLabs/getting-started-react",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/IronCoreLabs/getting-started-react.git"
+    },
+    "license": "MIT",
     "scripts": {
         "insecure": "node src/server.js &! react-scripts start",
         "secure": "node src/server.js &! REACT_APP_SECURE=true react-scripts start"
     },
-    "author": "IronCore Labs",
-    "license": "MIT",
-    "private": true,
     "dependencies": {
         "@ironcorelabs/ironweb": "^1.0.5",
         "emotion": "^9.2.6",

@@ -1,6 +1,6 @@
 # IronCore Getting Started in React
 
-IronCore is an SDK and cloud service that keeps application data private and secure. Get started with IronCore to grant, monitor, and revoke access to sensitive data in minutes. This sample React application shows how to add in the IronCore IronWeb JavaScript SDK to an existing application via Redux middleware. Read our [blog post]() to learn more.
+IronCore is an SDK and cloud service that keeps application data private and secure. Get started with IronCore to grant, monitor, and revoke access to sensitive data in minutes. This sample React application shows how to add in the IronCore IronWeb JavaScript SDK to an existing application via Redux middleware.
 
 ## Setting Up The Application
 

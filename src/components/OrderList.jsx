@@ -22,7 +22,7 @@ const classes = stylesListToClassNames({
         margin: "30px 0",
     },
     orderRow: {
-        width: 500,
+        // width: 500,
         padding: "15px 7px",
         display: "flex",
         flexDirection: "column",
@@ -57,6 +57,11 @@ const classes = stylesListToClassNames({
         border: "3px dashed #ccc",
         marginTop: 10,
     },
+    flexAlignColumn: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+    }
 });
 
 class OrderList extends React.Component {
@@ -140,7 +145,7 @@ class OrderList extends React.Component {
 
         if (ordersArray.length === 0) {
             return (
-                <div className={classes.emptyOrderList}>
+                <div>
                     <div>No orders created yet.</div>
                 </div>
             );
@@ -162,9 +167,13 @@ class OrderList extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <h3 className={classes.headerText}>Away Team Orders</h3>
-                {this.getWarningHeader()}
-                <Paper>{this.getAwayTeamOrders()}</Paper>
+                <div classname={classes.flexAlignColumn}>
+                    <Paper>
+                        <h3 className={classes.headerText}>Away Team Orders</h3>
+                        {this.getWarningHeader()}
+                        {this.getAwayTeamOrders()}
+                    </Paper>
+                </div>
             </React.Fragment>
         );
     }

@@ -8,10 +8,10 @@ import {stylesListToClassNames} from "../lib/Utils";
 
 const classes = stylesListToClassNames({
     header: {textAlign: "center"},
-    section: {display: "flex"},
-    avatarPanel: {
-        padding: "20px 30px 20px",
-    },
+    // section: {display: "flex"},
+    // avatarPanel: {
+    //     padding: "20px 30px 20px",
+    // },
     headerText: {
         fontSize: 20,
         padding: 10,
@@ -33,6 +33,15 @@ const classes = stylesListToClassNames({
         height: 235,
         border: "3px dashed #ccc",
     },
+    flexAlignColumn: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+    },
+    alignRow: {
+        display: "flex",
+        justifyContent: "space-around"
+    }
 });
 
 class AwayTeamManagement extends React.Component {
@@ -116,23 +125,22 @@ class AwayTeamManagement extends React.Component {
             return null;
         }
         return (
-            <div>
-                <h2 className={classes.header}>Manage Away Team</h2>
-                <div className={classes.section}>
-                    <div className={classes.avatarPanel}>
-                        <Paper>
+            <React.Fragment>
+                <div className={classes.alignRow}>
+                    <Paper>
+                        <div>
                             <div className={classes.headerText}>Crew</div>
                             {this.getCrewMemberList()}
-                        </Paper>
-                    </div>
-                    <div className={classes.avatarPanel}>
-                        <Paper>
+                        </div>
+                    </Paper>
+                    <Paper>
+                        <div>
                             <div className={classes.headerText}>Away Team</div>
                             {this.getAwayTeamList()}
-                        </Paper>
-                    </div>
+                        </div>
+                    </Paper>
                 </div>
-            </div>
+            </React.Fragment>
         );
     }
 }

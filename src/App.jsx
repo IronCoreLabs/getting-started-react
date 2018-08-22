@@ -13,19 +13,19 @@ import logo from "./logo-black.svg";
 const classes = stylesListToClassNames({
     main: {
         display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
+        flexDirection: "row",
+        alignItems: "space-around",
         backgroundColor: "#F6F8FA",
         "& h1": {
             margin: 20,
         },
     },
-    panelSections: {
-        marginTop: 40,
-        width: "100%",
-        display: "flex",
-        justifyContent: "space-around",
-    },
+    // panelSections: {
+    //     marginTop: 40,
+    //     width: "100%",
+    //     display: "flex",
+    //     justifyContent: "space-between",
+    // },
     orderSection: {minWidth: 550},
     loaderWrapper: {
         display: "flex",
@@ -33,6 +33,17 @@ const classes = stylesListToClassNames({
         alignItems: "center",
         height: "90vh",
     },
+    rowAlign: {
+        display: "flex",
+        alignItems: "row",
+        justifyContent: "space-around"
+    },
+    cardHeight: {
+        height: "500px"
+    },
+    centerItems: {
+        justifyContent: "center"
+    }
 });
 
 export class App extends React.Component {
@@ -82,16 +93,16 @@ export class App extends React.Component {
         return (
             <React.Fragment>
                 <Header />
-                <main className={classes.main}>
+                <div className={classes.rowAlign}>
                     <h1>Welcome to the Enterprise Messaging System</h1>
-                    <div className={classes.panelSections}>
-                        <div className={classes.orderSection}>
-                            <OrderList />
-                            <NewOrderForm />
-                        </div>
-                        <AwayTeamManagement />
-                    </div>
-                </main>
+                </div>
+                <div className={classes.centerItems}>
+                    <AwayTeamManagement />
+                </div>
+                <div className={classes.rowAlign}>
+                    <OrderList />
+                    <NewOrderForm />
+                </div>
             </React.Fragment>
         );
     }

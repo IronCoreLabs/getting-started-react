@@ -42,6 +42,12 @@ const classes = stylesListToClassNames({
         textTransform: "uppercase",
     },
     buttonIcon: {margin: "0 10px 0 -7px"},
+    flexAlignColumn: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+        // overflow: "scroll"
+    }
 });
 
 class NewOrderForm extends React.Component {
@@ -95,35 +101,37 @@ class NewOrderForm extends React.Component {
         const iconClasses = this.state.savingOrder ? "fas fa-spinner fa-spin" : "fas fa-broadcast-tower";
         return (
             <React.Fragment>
-                <h3 className={classes.headerText}>Add Away Team Order</h3>
-                <Paper>
-                    <div className={classes.orderHeader}>
-                        <div>From:</div>
-                        <div>Kirk</div>
-                    </div>
-                    <div className={classes.orderHeader}>
-                        <div>To:</div>
-                        <div>Away Team</div>
-                    </div>
-                    <input
-                        className={classes.genericInput}
-                        type="text"
-                        placeholder="Order Title"
-                        value={this.state.orderTitle}
-                        onChange={this.updateOrderTitle.bind(this)}
-                    />
-                    <textarea
-                        className={`${classes.textarea} ${classes.genericInput}`}
-                        placeholder="Enter your order message..."
-                        rows={6}
-                        onChange={this.updateOrderBody.bind(this)}
-                        value={this.state.orderBody}
-                    />
-                    <button className={classes.button} onClick={this.submitNewOrder.bind(this)}>
-                        <i className={`${classes.buttonIcon} ${iconClasses}`} />
-                        Submit Order
-                    </button>
-                </Paper>
+                <div className={classes.flexAlignColumn}>
+                    <Paper>
+                        <h3>Add Away Team Order</h3>
+                        <div className={classes.orderHeader}>
+                            <div>From:</div>
+                            <div>Kirk</div>
+                        </div>
+                        <div className={classes.orderHeader}>
+                            <div>To:</div>
+                            <div>Away Team</div>
+                        </div>
+                        <input
+                            className={classes.genericInput}
+                            type="text"
+                            placeholder="Order Title"
+                            value={this.state.orderTitle}
+                            onChange={this.updateOrderTitle.bind(this)}
+                        />
+                        <textarea
+                            className={classes.genericInput}
+                            placeholder="Enter your order message..."
+                            rows={2.8}
+                            onChange={this.updateOrderBody.bind(this)}
+                            value={this.state.orderBody}
+                        />
+                        <button className={classes.button} onClick={this.submitNewOrder.bind(this)}>
+                            <i className={`${classes.buttonIcon} ${iconClasses}`} />
+                            Submit Order
+                        </button>
+                    </Paper>
+                </div>
             </React.Fragment>
         );
     }

@@ -57,9 +57,9 @@
   version "0.7.3"
   resolved "https://registry.yarnpkg.com/@emotion/utils/-/utils-0.7.3.tgz#4240c5eee8af86843452af7497ac2808be04a77d"
 
-"@ironcorelabs/ironweb@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@ironcorelabs/ironweb/-/ironweb-1.0.5.tgz#c79a0cfcf1f8b935ba2bbcc27f9821e3bb47536d"
+"@ironcorelabs/ironweb@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@ironcorelabs/ironweb/-/ironweb-1.0.11.tgz#0c60f01259d1158a200cc0500c3352b6d29add9e"
   dependencies:
     "@stablelib/utf8" "0.10.1"
     base64-js "1.2.3"

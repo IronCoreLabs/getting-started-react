@@ -22,7 +22,10 @@ export default function(state = defaultState, action) {
         //Add new order to state keyed by it's ID
         return {
             ...state,
-            [action.payload.id]: action.payload,
+            [action.payload.id]: {
+                ...action.payload,
+                body: undefined,
+            },
         };
     }
     if (action.type === "SWITCH_USER") {

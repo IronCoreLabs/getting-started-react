@@ -1,19 +1,110 @@
 /* prettier-ignore */
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary, time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
+
 /* prettier-ignore */
-article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {
-	display: block;
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
 }
+
 html,
 body {
     height: 100%;
@@ -22,26 +113,32 @@ body {
     font-weight: 100;
     line-height: 1;
 }
+
 h1 {
     font-size: 26px;
     margin-bottom: 5px;
 }
+
 h2 {
     font-size: 24px;
     margin-bottom: 5px;
 }
+
 h3 {
     font-size: 22px;
     margin-bottom: 5px;
 }
+
 ol,
 ul {
     list-style: none;
 }
+
 blockquote,
 q {
     quotes: none;
 }
+
 blockquote:before,
 blockquote:after,
 q:before,
@@ -49,6 +146,7 @@ q:after {
     content: "";
     content: none;
 }
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -59,9 +157,11 @@ table {
     flex-direction: column;
     height: 100%;
 }
+
 #root header {
     flex: 0 1 auto;
 }
+
 #root main {
     flex: 1 1 auto;
 }
@@ -69,21 +169,23 @@ table {
 #initLoader {
     position: relative;
 }
+
 #initLoader:before {
     content: "";
-    width: 160px;
-    height: 160px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    border-top: 10px solid #ee2e2a;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 10px solid transparent;
+    border-top: 5px solid #ee2e2a;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid transparent;
     position: absolute;
     z-index: 9;
-    top: 10px;
-    left: 10px;
+    top: 0px;
+    left: 0px;
     animation: rt 1.5s infinite;
 }
+
 @keyframes rt {
     from {
         transform: rotate(0deg);
@@ -114,18 +216,23 @@ table {
     transform: translate(-50%, 0);
     opacity: 0;
 }
+
 .snackbar-success {
     background-color: #00c853;
 }
+
 .snackbar-error {
     background-color: #d51819;
 }
+
 .snackbar-info {
     background-color: #00bcd4;
 }
+
 .snackbar-warning {
     background-color: #fcd92d;
 }
+
 .snackbar-action {
     background: inherit;
     display: inline-block;

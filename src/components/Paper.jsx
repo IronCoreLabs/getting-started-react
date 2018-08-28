@@ -14,9 +14,10 @@ const classes = stylesListToClassNames({
     },
 });
 
-export default ({children, size}) => {
-    const fixedSize = size || "auto";
-    const paperWithSize = css(classes.paper, {height: fixedSize, width: fixedSize});
+export default ({children, height, width}) => {
+    const fixedHeight = height || "auto";
+    const fixedWidth = width || "auto";
+    const paperWithSize = css(classes.paper, {height: fixedHeight, width: fixedWidth});
 
     return <div className={paperWithSize}>{children}</div>;
 };

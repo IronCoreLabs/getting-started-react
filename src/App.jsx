@@ -5,79 +5,146 @@ import Header from "./components/Header";
 import OrderList from "./components/OrderList";
 import NewOrderForm from "./components/NewOrderForm";
 import AwayTeamManagement from "./components/AwayTeamManagement";
-import {initializeAsUser, getTestGroupDetails} from "./lib/Initialization";
+import {initializeAsUser, returnIsInitialized, getTestGroupDetails, deauthDevice} from "./lib/Initialization";
 import {KIRK} from "./Constants";
 import {stylesListToClassNames} from "./lib/Utils";
+import Button from "./components/atom/Button";
+import HorizontalLogoBlack from "./components/icons/HorizontalLogoBlack";
+import Paper from "./components/Paper";
 import logo from "./logo-black.svg";
 
 const classes = stylesListToClassNames({
     main: {
-        display: "flex",
-        flexDirection: "column",
         alignItems: "center",
         backgroundColor: "#F6F8FA",
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+        justifyContent: "center",
+        width: "100vw",
         "& h1": {
             margin: 20,
         },
     },
-    panelSections: {
-        marginTop: 40,
+    initPanel: {
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        justifyContent: "space-between",
         width: "100%",
+    },
+    panelSections: {
         display: "flex",
         justifyContent: "space-around",
+        marginTop: 40,
+        width: "100%",
     },
     orderSection: {minWidth: 550},
-    loaderWrapper: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "90vh",
+    mainText: {
+        lineHeight: "1.3",
+        marginTop: "-180px !important",
+    },
+    logo: {
+        left: 50,
+        position: "absolute",
+    },
+    button: {
+        color: "#000 !important",
+    },
+    refreshIcon: {
+        marginRight: 15,
     },
 });
 
 export class App extends React.Component {
     constructor() {
         super();
-        this.state = {
-            initializing: true,
-            error: false,
-        };
+        this.state = {loading: false, error: false};
+    }
 
-        /**
-         * Initialize as Kirk and optionally do away team creation if necessary
-         */
+    /**
+     * Trigger initialization and set the loading state to true until initialization completes.
+     */
+    handleInitClick() {
+        this.initIronWebSDK();
+        this.setState({loading: true});
+    }
+
+    /**
+     * Initialize as Kirk and optionally do away team creation if necessary
+     */
+    initIronWebSDK() {
         initializeAsUser(KIRK)
             .then(() => getTestGroupDetails())
             .then((group) => {
                 this.props.setAwayTeam(group);
-                this.setState({initializing: false, error: false});
+                this.setState({loading: false, error: false});
             })
-            .catch(() => this.setState({initializing: false, error: true}));
+            .catch(() => this.setState({loading: false, error: true}));
     }
 
     /**
      * Get markup for when the app is initializing the app.
      */
-    getInitializingMarkup() {
+    getInitPageMarkup() {
         return (
-            <div className={classes.loaderWrapper}>
+            <div className={classes.main}>
+                <Paper height="600px" width="320px">
+                    <div className={classes.initPanel}>
+                        <HorizontalLogoBlack height="50" width="200" alt="IronCore Logo" className={classes.logo} />
+                        <h1 className={classes.mainText}>Initialize IronWeb SDK to get started.</h1>
+                        <Button classes={classes.button} buttonAction={() => this.handleInitClick()}>
+                            Initialize IronWeb SDK
+                        </Button>
+                    </div>
+                </Paper>
+            </div>
+        );
+    }
+
+    /**
+     * Get markup for when the app is loading.
+     */
+    getLoadingMarkup() {
+        return (
+            <div className={classes.main}>
                 <div id="initLoader">
-                    <img src={logo} height="200" width="200" alt="" />
+                    <img src={logo} height="70" width="70" alt="" />
                 </div>
             </div>
         );
     }
 
+    /**
+     * Get markup for when an error initializing the IronWeb SDK occurs.
+     */
+    getErrorMarkup() {
+        return (
+            <div className={classes.main}>
+                <Paper height="600px" width="320px">
+                    <div className={classes.initPanel}>
+                        <h1>Woops! An Error Occured</h1>
+                        <h4 className={classes.mainText}>An error occured while initializing the IronCore service. Please refresh your page to try again.</h4>
+                        <Button buttonAction={window.location.reload()}>
+                            <i className={`${classes.refreshIcon} fas fa-sync-alt`} />
+                            Refresh
+                        </Button>
+                    </div>
+                </Paper>
+            </div>
+        );
+    }
+
     render() {
-        if (this.state.initializing) {
-            return this.getInitializingMarkup();
+        if (this.state.loading) {
+            return this.getLoadingMarkup();
+        }
+        if (!returnIsInitialized()) {
+            return this.getInitPageMarkup();
         }
         if (this.state.error) {
-            return (
-                <div className={classes.loaderWrapper}>
-                    <div>An error occured while initializing the IronCore service. Please refresh and try again"</div>
-                </div>
-            );
+            return this.getErrorMarkup();
         }
         return (
             <React.Fragment>
@@ -92,6 +159,7 @@ export class App extends React.Component {
                         <AwayTeamManagement />
                     </div>
                 </main>
+                <button onClick={deauthDevice()}>DeAuth Device</button>
             </React.Fragment>
         );
     }

@@ -1,5 +1,8 @@
 import * as IronWeb from "@ironcorelabs/ironweb";
-import {getTestGroup, setTestGroup} from "./Utils";
+import {
+    getTestGroup,
+    setTestGroup
+} from "./Utils";
 
 /**
  * Request a signed JWT from the server for the current project and segment.
@@ -33,9 +36,17 @@ export function getTestGroupDetails() {
     return IronWeb.group.get(existingTestGroup);
 }
 
+
 /**
  * Initialize the IronWeb SDK as the provided user ID
  */
 export function initializeAsUser(userID) {
     return IronWeb.initialize(() => getJWT(userID), () => getUserPasscode());
+}
+
+/**
+ * Check if IronWeb SDK is initialized and return a boolean value indicating whether it is or not.
+ */
+export function returnIsInitialized() {
+    return IronWeb.isInitialized();
 }

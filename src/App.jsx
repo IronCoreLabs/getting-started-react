@@ -12,26 +12,26 @@ import logo from "./logo-black.svg";
 
 const classes = stylesListToClassNames({
     main: {
-        display: "flex",
-        flexDirection: "column",
         alignItems: "center",
         backgroundColor: "#F6F8FA",
+        display: "flex",
+        flexDirection: "column",
         "& h1": {
             margin: 20,
         },
     },
     panelSections: {
-        marginTop: 40,
-        width: "100%",
         display: "flex",
         justifyContent: "space-around",
+        marginTop: 40,
+        width: "100%",
     },
     orderSection: {minWidth: 550},
     loaderWrapper: {
-        display: "flex",
-        justifyContent: "center",
         alignItems: "center",
+        display: "flex",
         height: "90vh",
+        justifyContent: "center",
     },
 });
 

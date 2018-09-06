@@ -1,13 +1,13 @@
 import * as React from "react";
-import {connect} from "react-redux";
-import {setAwayTeam} from "./actions/AwayTeamActions";
+import { connect } from "react-redux";
+import { setAwayTeam } from "./actions/AwayTeamActions";
 import Header from "./components/Header";
 import OrderList from "./components/OrderList";
 import NewOrderForm from "./components/NewOrderForm";
 import AwayTeamManagement from "./components/AwayTeamManagement";
-import {initializeAsUser, getTestGroupDetails} from "./lib/Initialization";
-import {KIRK} from "./Constants";
-import {stylesListToClassNames} from "./lib/Utils";
+import { initializeAsUser, getTestGroupDetails } from "./lib/Initialization";
+import { KIRK } from "./Constants";
+import { stylesListToClassNames } from "./lib/Utils";
 import logo from "./logo-black.svg";
 
 const classes = stylesListToClassNames({
@@ -26,7 +26,7 @@ const classes = stylesListToClassNames({
         marginTop: 40,
         width: "100%",
     },
-    orderSection: {minWidth: 550},
+    orderSection: { minWidth: 550 },
     loaderWrapper: {
         alignItems: "center",
         display: "flex",
@@ -50,9 +50,9 @@ export class App extends React.Component {
             .then(() => getTestGroupDetails())
             .then((group) => {
                 this.props.setAwayTeam(group);
-                this.setState({initializing: false, error: false});
+                this.setState({ initializing: false, error: false });
             })
-            .catch(() => this.setState({initializing: false, error: true}));
+            .catch(() => this.setState({ initializing: false, error: true }));
     }
 
     /**
@@ -62,7 +62,7 @@ export class App extends React.Component {
         return (
             <div className={classes.loaderWrapper}>
                 <div id="initLoader">
-                    <img src={logo} height="200" width="200" alt="" />
+                    <img src={logo} height="70" width="70" alt="" />
                 </div>
             </div>
         );
@@ -99,5 +99,5 @@ export class App extends React.Component {
 
 export default connect(
     null,
-    {setAwayTeam}
+    { setAwayTeam }
 )(App);

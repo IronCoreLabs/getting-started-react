@@ -1,40 +1,46 @@
 import * as React from "react";
-import {connect} from "react-redux";
-import {listOrders, getOrder} from "../actions/OrderActions";
+import { connect } from "react-redux";
+import { listOrders, getOrder } from "../actions/OrderActions";
 import Paper from "./Paper";
 import insignia from "../avatars/insignia.png";
 import LoadingPlaceholder from "./LoadingPlaceholder";
 import AvatarHoverAction from "./AvatarHoverAction";
-import {stylesListToClassNames} from "../lib/Utils";
+import { stylesListToClassNames } from "../lib/Utils";
 
 const classes = stylesListToClassNames({
     headerText: {
-        textAlign: "center",
+        color: "#BDBDBD",
+        fontFamily: "Monaco",
+        fontSize: 16,
+        letterSpacing: "-0.4px",
+        marginBottom: 20,
         marginTop: 25,
     },
     listWarning: {
-        maxWidth: 525,
-        color: "#fefefe",
         lineHeight: 1.125,
+        margin: "30px 0",
+        maxWidth: 525,
         padding: "10px 15px",
         textAlign: "center",
-        backgroundColor: "#00BCD4",
-        margin: "30px 0",
     },
+    warning: { backgroundColor: "#FDDC3B" },
+    info: { backgroundColor: "#0ABFD6" },
+    icon: { marginRight: 15 },
     orderRow: {
-        width: 500,
-        padding: "15px 7px",
+        borderBottom: "1px solid #E4E4E4",
+        cursor: "pointer",
         display: "flex",
         flexDirection: "column",
-        borderBottom: "1px solid #ccc",
-        cursor: "pointer",
-        "&:last-child": {borderBottom: "none"},
-        "&:hover": {backgroundColor: "#ddd"},
+        marginLeft: "-15px",
+        padding: "10px 30px",
+        width: "calc(100% - 15px)",
+        "&:last-child": { borderBottom: "none" },
+        "&:hover": { backgroundColor: "#EEE" },
     },
     orderHeader: {
-        position: "relative",
-        display: "flex",
         alignItems: "center",
+        display: "flex",
+        position: "relative",
     },
     todoTitle: {
         fontWeight: "bold",
@@ -49,12 +55,12 @@ const classes = stylesListToClassNames({
         paddingLeft: 15,
     },
     emptyOrderList: {
-        display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        border: "3px dashed #CCC",
+        display: "flex",
         fontSize: 18,
         height: 235,
-        border: "3px dashed #ccc",
+        justifyContent: "center",
         marginTop: 10,
     },
 });
@@ -75,11 +81,11 @@ class OrderList extends React.Component {
     componentWillReceiveProps(nextProps) {
         //If we've loaded the data for the current expanded row, clear the loading state
         if (this.state.expandedRow && typeof nextProps.orders[this.state.expandedRow].body === "string") {
-            this.setState({loadingRow: false});
+            this.setState({ loadingRow: false });
         }
         //If the currently logged in user changes, reset the currently expanded row
         if (nextProps.activeUser !== this.props.activeUser) {
-            this.setState({expandedRow: null});
+            this.setState({ expandedRow: null });
         }
     }
 
@@ -90,15 +96,15 @@ class OrderList extends React.Component {
     expandRow(orderID) {
         //If the user is collapsing this order, just clear out the expandedRow state
         if (this.state.expandedRow === orderID) {
-            return this.setState({expandedRow: null});
+            return this.setState({ expandedRow: null });
         }
         //If the data has already been loaded, just display it
         if (typeof this.props.orders[orderID].body === "string") {
-            return this.setState({expandedRow: orderID});
+            return this.setState({ expandedRow: orderID });
         }
         //Otherwise, set a loading indicator and request the order
-        this.setState({expandedRow: orderID, loadingRow: true});
-        this.props.getOrder(orderID, () => this.setState({loadingRow: false, expandedRow: null}));
+        this.setState({ expandedRow: orderID, loadingRow: true });
+        this.props.getOrder(orderID, () => this.setState({ loadingRow: false, expandedRow: null }));
     }
 
     /**
@@ -116,16 +122,17 @@ class OrderList extends React.Component {
      */
     getWarningHeader() {
         if (this.props.isActiveUserInGroup) {
-            return null;
+            return (
+                <div className={`${classes.listWarning} ${classes.info}`}>
+                    <i className={`fas fa-info-circle ${classes.icon}`}></i>
+                    You are a member of the away-team group.
+                </div>
+            );
         }
         return (
-            <div className={classes.listWarning}>
-                The currently logged in user is not part of the Away Team. That would normally mean that the orders wouldn't be visible to the current user.
-                This is usually enforced via access control code to restrict view access.
-                <br />
-                <br />
-                However, to show the extra layer of security that is provided via IronCore we'll display the list of orders and prove how even if they could be
-                retrieved, the orders that are encrypted are still safe as they cannot be decyrpted by the current user.
+            <div className={`${classes.listWarning} ${classes.warning}`}>
+                <i className={`fas fa-exclamation-triangle ${classes.icon}`}></i>
+                You are NOT a member of the away-team group therefore you will not be able to decrypt orders.
             </div>
         );
     }
@@ -162,9 +169,9 @@ class OrderList extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <h3 className={classes.headerText}>Away Team Orders</h3>
                 {this.getWarningHeader()}
-                <Paper>{this.getAwayTeamOrders()}</Paper>
+                <h3 className={classes.headerText}>Decrypt an order:</h3>
+                <Paper className={classes.paper}>{this.getAwayTeamOrders()}</Paper>
             </React.Fragment>
         );
     }
@@ -178,5 +185,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps,
-    {listOrders, getOrder}
+    { listOrders, getOrder }
 )(OrderList);

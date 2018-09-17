@@ -1,52 +1,121 @@
 import * as React from "react";
-import {connect} from "react-redux";
-import Paper from "./Paper";
+import { connect } from "react-redux";
 import AvatarHoverAction from "./AvatarHoverAction";
-import {Users, KIRK} from "../Constants";
-import {addUserToAwayTeam, removeUserFromAwayTeam} from "../actions/AwayTeamActions";
-import {stylesListToClassNames} from "../lib/Utils";
+import { Users, KIRK } from "../Constants";
+import { addUserToAwayTeam, removeUserFromAwayTeam } from "../actions/AwayTeamActions";
+import { stylesListToClassNames } from "../lib/Utils";
 
 const classes = stylesListToClassNames({
-    header: {textAlign: "center"},
-    section: {display: "flex"},
-    avatarPanel: {
-        padding: "20px 30px 20px",
+    header: {
+        alignItems: "center",
+        backgroundColor: "#F6F8FA",
+        display: "flex",
+        flexDirection: "row",
+        fontSize: 28,
+        justifyContent: "space-between",
+        left: 0,
+        padding: 22,
+        top: 0,
+    },
+    section: { padding: 22 },
+    mainHeaderText: {
+        color: "#000",
+        fontFamily: "ProximaNova-Bold",
     },
     headerText: {
-        fontSize: 20,
-        padding: 10,
-        textAlign: "center",
-    },
-    avatarList: {
-        width: 400,
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fill,minmax(110px, 1fr))",
-        "-ms-grid-template-colums": "repeat(auto-fill,minmax(110px, 1fr))",
-        "& > div": {margin: 5},
+        color: "#929292",
+        fontFamily: "ProximaNova-Bold",
+        fontSize: 14,
+        marginTop: 20,
     },
     emptyAvatarList: {
-        display: "flex",
         alignItems: "center",
+        border: "2px dashed #ccc",
+        color: "#929292",
+        display: "flex",
+        fontFamily: "ProximaNova-Regular",
+        fontSize: 14,
+        height: 40,
         justifyContent: "center",
-        fontSize: 18,
-        width: 400,
-        height: 235,
-        border: "3px dashed #ccc",
+        marginTop: 20,
     },
+    sideBar: {
+        background: "#FFF",
+        boxShadow: "2px 2px 4px 0 rgba(0, 0, 0, 0.50)",
+        display: "none",
+        height: "100vh",
+        maxWidth: 430,
+        minWidth: 300,
+        position: "fixed",
+        right: 0,
+        top: 0,
+        width: "50%",
+        zIndex: 20,
+    },
+    menuOpen: { display: "block" },
+    userRow: {
+        alignItems: "center",
+        borderBottom: "1px solid #F2F2F2",
+        cursor: "pointer",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        margin: "0 -22px",
+        padding: "8px 22px",
+    },
+    userLeft: {
+        alignItems: "center",
+        display: "flex",
+        justifyContent: "space-between",
+    },
+    userDescription: {
+        paddingLeft: 20
+    },
+    userName: {
+        color: "#000",
+        fontFamily: "ProximaNova-Regular",
+        fontSize: 16,
+        paddingBottom: 4,
+    },
+    userRole: {
+        color: "#929292",
+        fontFamily: "ProximaNova-Bold",
+        fontSize: 14,
+    },
+    toggleMenuButton: {
+        color: "#0ABFD6",
+        cursor: "pointer",
+        fontFamily: "ProximaNova-Regular",
+        fontSize: 16,
+        letterSpacing: ".05em",
+        marginRight: 30,
+        textAlign: "right",
+        textTransform: "uppercase",
+    }
 });
 
 class AwayTeamManagement extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {loadingUserID: null};
+        this.state = {
+            menuOpen: false,
+            loadingUserID: null
+        };
+    }
+
+    /**
+     * Open or close away team management menu based on menuOpen state
+     */
+    toggleMenuOpen = () => {
+        this.setState({ menuOpen: !this.state.menuOpen });
     }
 
     /**
      * Kick off action to add the provided user to the away team
      */
     addUser(user) {
-        this.setState({loadingUserID: user.id});
-        const clearLoading = () => this.setState({loadingUserID: null});
+        this.setState({ loadingUserID: user.id });
+        const clearLoading = () => this.setState({ loadingUserID: null });
         this.props.addUserToAwayTeam(user, clearLoading, clearLoading);
     }
 
@@ -54,8 +123,8 @@ class AwayTeamManagement extends React.Component {
      * Kick off action to removed the provided user from the away team
      */
     removeUser(user) {
-        this.setState({loadingUserID: user.id});
-        const clearLoading = () => this.setState({loadingUserID: null});
+        this.setState({ loadingUserID: user.id });
+        const clearLoading = () => this.setState({ loadingUserID: null });
         this.props.removeUserFromAwayTeam(user, clearLoading, clearLoading);
     }
 
@@ -69,16 +138,22 @@ class AwayTeamManagement extends React.Component {
             .filter((user) => this.props.awayTeamMembers.indexOf(user.id) === -1 && user.id !== KIRK)
             .sort((a, b) => a.id > b.id)
             .map((user) => (
-                <AvatarHoverAction
-                    loading={this.state.loadingUserID === user.id}
-                    key={user.id}
-                    src={user.img}
-                    iconClasses="fas fa-plus"
-                    iconColor="#00BCD4"
-                    clickAction={() => this.addUser(user)}
-                />
+                <div className={classes.userRow} onClick={() => this.addUser(user)} key={user.id}>
+                    <div className={classes.userLeft}>
+                        <AvatarHoverAction
+                            loading={this.state.loadingUserID === user.id}
+                            src={user.img}
+                            size={40}
+                        />
+                        <div className={classes.userDescription}>
+                            <p className={classes.userName}>{user.name}</p>
+                            <p className={classes.userRole}>Starship Enterprise</p>
+                        </div>
+                    </div>
+                    <i className="fas fa-plus"></i>
+                </div>
             ));
-        return <div className={classes.avatarList}>{crewList}</div>;
+        return <div>{crewList}</div>;
     }
 
     /**
@@ -90,7 +165,7 @@ class AwayTeamManagement extends React.Component {
         if (this.props.awayTeamMembers.length === 1) {
             return (
                 <div className={classes.emptyAvatarList}>
-                    <div>Add crew members to the away team.</div>
+                    <div>Add crew members to the away-team.</div>
                 </div>
             );
         }
@@ -98,17 +173,40 @@ class AwayTeamManagement extends React.Component {
             .filter((user) => user !== KIRK)
             .sort((a, b) => a > b)
             .map((user) => (
-                <AvatarHoverAction
-                    key={Users[user].id}
-                    src={Users[user].img}
-                    loading={this.state.loadingUserID === user.id}
-                    iconClasses="fas fa-times"
-                    iconColor="#D51819"
-                    clickAction={() => this.removeUser(Users[user])}
-                />
+                <div className={classes.userRow} onClick={() => this.removeUser(Users[user])} key={Users[user].id}>
+                    <div className={classes.userLeft}>
+                        <AvatarHoverAction
+                            src={Users[user].img}
+                            loading={this.state.loadingUserID === user.id}
+                            clickAction={() => this.removeUser(Users[user])}
+                            size={40}
+                        />
+                        <div className={classes.userDescription}>
+                            <p className={classes.userName}>{Users[user].name}</p>
+                            <p className={classes.userRole}>Away-team Group</p>
+                        </div>
+                    </div>
+                    <i className="fas fa-times"></i>
+                </div>
             ));
+        return awayTeam;
+    }
 
-        return <div className={classes.avatarList}>{awayTeam}</div>;
+    getMenuMarkup() {
+        return (
+            <div className={`${classes.sideBar} ${this.state.menuOpen ? classes.menuOpen : ''}`}>
+                <div className={classes.header}>
+                    <h2 className={classes.mainHeaderText}>Group Management</h2>
+                    <i className="fas fa-times" onClick={() => this.toggleMenuOpen()}></i>
+                </div>
+                <div className={classes.section}>
+                    <div className={classes.headerText}>Away-Team Group Members</div>
+                    {this.getAwayTeamList()}
+                    <div className={classes.headerText}>Starship Enterprise Crew</div>
+                    {this.getCrewMemberList()}
+                </div>
+            </div >
+        );
     }
 
     render() {
@@ -116,23 +214,10 @@ class AwayTeamManagement extends React.Component {
             return null;
         }
         return (
-            <div>
-                <h2 className={classes.header}>Manage Away Team</h2>
-                <div className={classes.section}>
-                    <div className={classes.avatarPanel}>
-                        <Paper>
-                            <div className={classes.headerText}>Crew</div>
-                            {this.getCrewMemberList()}
-                        </Paper>
-                    </div>
-                    <div className={classes.avatarPanel}>
-                        <Paper>
-                            <div className={classes.headerText}>Away Team</div>
-                            {this.getAwayTeamList()}
-                        </Paper>
-                    </div>
-                </div>
-            </div>
+            <React.Fragment>
+                <h2 onClick={() => this.toggleMenuOpen()} className={classes.toggleMenuButton}>Add Member</h2>
+                {this.state.menuOpen ? this.getMenuMarkup() : ''}
+            </React.Fragment>
         );
     }
 }
@@ -144,5 +229,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps,
-    {addUserToAwayTeam, removeUserFromAwayTeam}
+    { addUserToAwayTeam, removeUserFromAwayTeam }
 )(AwayTeamManagement);

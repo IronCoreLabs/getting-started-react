@@ -4,7 +4,6 @@ import { setAwayTeam } from "./actions/AwayTeamActions";
 import Header from "./components/Header";
 import OrderList from "./components/OrderList";
 import NewOrderForm from "./components/NewOrderForm";
-import AwayTeamManagement from "./components/AwayTeamManagement";
 import { initializeAsUser, getTestGroupDetails } from "./lib/Initialization";
 import { KIRK } from "./Constants";
 import { stylesListToClassNames } from "./lib/Utils";
@@ -13,20 +12,16 @@ import logo from "./logo-black.svg";
 const classes = stylesListToClassNames({
     main: {
         alignItems: "center",
-        backgroundColor: "#F6F8FA",
         display: "flex",
         flexDirection: "column",
         "& h1": {
             margin: 20,
         },
     },
-    panelSections: {
-        display: "flex",
-        justifyContent: "space-around",
-        marginTop: 40,
-        width: "100%",
+    orderSection: {
+        maxWidth: 550,
+        width: "100vw",
     },
-    orderSection: { minWidth: 550 },
     loaderWrapper: {
         alignItems: "center",
         display: "flex",
@@ -83,13 +78,9 @@ export class App extends React.Component {
             <React.Fragment>
                 <Header />
                 <main className={classes.main}>
-                    <h1>Welcome to the Enterprise Messaging System</h1>
-                    <div className={classes.panelSections}>
-                        <div className={classes.orderSection}>
-                            <OrderList />
-                            <NewOrderForm />
-                        </div>
-                        <AwayTeamManagement />
+                    <div className={classes.orderSection}>
+                        <NewOrderForm />
+                        <OrderList />
                     </div>
                 </main>
             </React.Fragment>

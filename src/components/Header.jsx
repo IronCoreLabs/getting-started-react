@@ -1,72 +1,112 @@
 import * as React from "react";
-import {connect} from "react-redux";
-import logo from "../logo-white.svg";
+import { connect } from "react-redux";
+import logo from "../logo-black.svg";
 import AvatarHoverAction from "./AvatarHoverAction";
-import {Users} from "../Constants";
-import {changeActiveUser} from "../actions/UserActions";
-import {stylesListToClassNames} from "../lib/Utils";
+import AwayTeamManagement from "../components/AwayTeamManagement";
+import { Users } from "../Constants";
+import { changeActiveUser } from "../actions/UserActions";
+import { stylesListToClassNames } from "../lib/Utils";
 
 const classes = stylesListToClassNames({
     nav: {
-        backgroundColor: "#2c2c2c",
-        display: "flex",
         alignItems: "center",
-        justifyContent: "center",
-        padding: 10,
-        color: "#fff",
-        fontSize: 26,
-        "& > img": {marginRight: 5},
+        borderBottom: ".5px solid #CCC",
+        color: "#8F8F8F",
+        display: "flex",
+        fontWeight: 400,
+        justifyContent: "space-between",
+        padding: "10px 30px",
     },
     activeUser: {
-        position: "absolute",
-        right: 10,
-        cursor: "pointer",
-        "& > div": {position: "relative"},
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "row",
     },
     dropdown: {
-        minWidth: 280,
+        backgroundColor: "#FFF",
+        borderRadius: 2,
+        boxShadow: "0 2px 4px 0 rgba(0,0,0,0.50), 0 6px 10px 0 rgba(0,0,0,0.23), 0 10px 30px 0 rgba(0,0,0,0.19)",
         display: "none",
+        padding: "20px 20px 0px 20px",
         position: "absolute",
-        right: 0,
-        color: "#000",
-        fontSize: 14,
-        backgroundColor: "#fff",
-        boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2)",
-        zIndex: 10,
+        right: 20,
+        top: "65px !important",
+        width: 320,
+        zIndex: 30,
     },
-    dropdownShow: {display: "block"},
+    dropdownShow: { display: "block !important" },
     loginText: {
-        fontSize: 20,
-        padding: "10px 15px",
-        color: "#777",
-        fontWeight: 400,
+        color: "#929292",
+        fontFamily: "ProximaNova-Bold",
+        fontSize: 14,
+        marginBottom: 15,
     },
     dropdownUser: {
-        display: "flex",
         alignItems: "center",
+        borderBottom: "1px solid rgba(151, 151, 151, .15)",
+        display: "flex",
         justifyContent: "space-between",
+        marginLeft: "-20px",
         padding: "7px 15px",
-        borderBottom: "1px solid #ccc",
         textAlign: "right",
-        "&:hover": {backgroundColor: "#eee"},
+        width: "calc(100% + 10px)",
+        "&:hover": { backgroundColor: "#EEE" },
     },
     userInfo: {
-        display: "flex",
         alignItems: "center",
+        display: "flex",
         textAlign: "left",
     },
-    userText: {marginLeft: 15},
-    userName: {
-        fontSize: 16,
-        fontWeight: 400,
-        marginBottom: 5,
-    },
+    userText: { marginLeft: 20 },
     userRole: {
-        fontSize: 14,
-        fontWeight: 400,
-        color: "#777",
+        color: "#929292",
+        fontFamily: "ProximaNova-Bold",
+        fontSize: 12,
+        letterSpacing: ".02em",
+        paddingTop: 5,
     },
-    chevron: {color: "#ccc"},
+    chevron: { color: "#CCC" },
+    titleContainer: {
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+
+    },
+    ironTitle: {
+        color: "black",
+        fontFamily: "ProximaNova-Bold",
+        marginLeft: 10,
+        paddingRight: 10,
+        textTransform: "uppercase",
+    },
+    userDescription: {
+        marginRight: 15,
+        textAlign: "right"
+    },
+    activeUserName: {
+        color: "#000",
+        fontFamily: "ProximaNova-Bold",
+        letterSpacing: "-0.14px",
+        textAlign: "right",
+    },
+    userName: {
+        color: "#000",
+        fontFamily: "ProximaNova-Regular",
+        fontSize: 14,
+    },
+    actingAs: {
+        color: "#BDBDBD",
+        fontFamily: "ProximaNova-Regular",
+        fontSize: 14,
+        letterSpacing: "-0.14px",
+        textAlign: "right",
+    },
+    rightSection: {
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "row",
+    }
 });
 
 class Header extends React.Component {
@@ -83,7 +123,7 @@ class Header extends React.Component {
      */
     componentDidMount() {
         window.addEventListener("click", () => {
-            this.setState({dropdownOpen: false});
+            this.setState({ dropdownOpen: false });
         });
     }
 
@@ -91,8 +131,9 @@ class Header extends React.Component {
      * Display the user selection dropdown.
      */
     showDropdown(event) {
+        console.log(event)
         event.stopPropagation();
-        this.setState({dropdownOpen: true});
+        this.setState({ dropdownOpen: true });
     }
 
     /**
@@ -100,9 +141,9 @@ class Header extends React.Component {
      */
     changeUser(user, event) {
         event.stopPropagation();
-        this.setState({changingUserID: user.id});
+        this.setState({ changingUserID: user.id });
         this.props.changeActiveUser(user, () => {
-            this.setState({dropdownOpen: false, changingUserID: null});
+            this.setState({ dropdownOpen: false, changingUserID: null });
         });
     }
 
@@ -111,12 +152,12 @@ class Header extends React.Component {
      */
     getUserRole(user) {
         if (this.props.awayTeam.admins.indexOf(user.id) > -1) {
-            return "Away Team Admin";
+            return "Away-Team Admin";
         }
         if (this.props.awayTeam.members.indexOf(user.id) > -1) {
-            return "Away Team Member";
+            return "Away-Team";
         }
-        return "";
+        return "Starship Enterprise";
     }
 
     /**
@@ -131,7 +172,7 @@ class Header extends React.Component {
         const crewList = users.map((user) => (
             <div key={user.id} className={classes.dropdownUser} onClick={this.changeUser.bind(this, user)}>
                 <div className={classes.userInfo}>
-                    <AvatarHoverAction src={user.img} size={60} loading={this.state.changingUserID === user.id} iconColor="#00BCD4" />
+                    <AvatarHoverAction src={user.img} size={45} loading={this.state.changingUserID === user.id} iconColor="#00BCD4" />
                     <div className={classes.userText}>
                         <div className={classes.userName}>{user.name}</div>
                         <div className={classes.userRole}>{this.getUserRole(user)}</div>
@@ -145,20 +186,29 @@ class Header extends React.Component {
 
         return (
             <React.Fragment>
-                <div className={classes.loginText}>Login As: </div>
+                <div className={classes.loginText}>Login As:</div>
                 {crewList}
             </React.Fragment>
         );
     }
 
     render() {
+        console.log(this.state.dropdownOpen);
         return (
             <header className={classes.nav}>
-                <img src={logo} height="70" width="70" alt="" />
-                <span>IronCore Get Started</span>
-                <div className={classes.activeUser} onClick={this.showDropdown.bind(this)}>
-                    <div>
-                        <AvatarHoverAction src={this.props.activeUser.img} size={80} />
+                <div className={classes.titleContainer}>
+                    <img src={logo} height="40" width="40" alt="" />
+                    <h1 className={classes.ironTitle}>Iron</h1>
+                    <h1>React</h1>
+                </div>
+                <div className={classes.rightSection}>
+                    <AwayTeamManagement />
+                    <div className={classes.activeUser} onClick={this.showDropdown.bind(this)}>
+                        <div className={classes.userDescription}>
+                            <p className={classes.actingAs}>Acting as:</p>
+                            <p className={classes.activeUserName}>  {this.props.activeUser.name}</p>
+                        </div>
+                        <AvatarHoverAction src={this.props.activeUser.img} size={40} />
                         <div className={`${classes.dropdown} ${this.state.dropdownOpen ? classes.dropdownShow : ""}`}>{this.getDropDownMarkup()}</div>
                     </div>
                 </div>
@@ -174,5 +224,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps,
-    {changeActiveUser}
+    { changeActiveUser }
 )(Header);

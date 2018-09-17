@@ -1,6 +1,6 @@
 import * as React from "react";
-import {css} from "emotion";
-import {stylesListToClassNames} from "../lib/Utils";
+import { css } from "emotion";
+import { stylesListToClassNames } from "../lib/Utils";
 
 const classes = stylesListToClassNames({
     root: {
@@ -20,13 +20,13 @@ const classes = stylesListToClassNames({
     },
 });
 
-export default ({src, iconClasses, clickAction, iconColor, loading, size}) => {
+export default ({ src, iconClasses, clickAction, iconColor, loading, size }) => {
     size = size || 110;
-    const backgroundImage = css({background: `url(${src}) 0 0 no-repeat`, backgroundSize: "cover", height: size, width: size});
-    const iconStyle = css({color: iconColor});
+    const backgroundImage = css({ background: `url(${src}) 0 0 no-repeat`, backgroundSize: "cover", height: size, width: size });
+    const iconStyle = css({ color: iconColor });
 
-    const icon = loading ? <i className={`${iconStyle} fas fa-spinner fa-spin fa-3x`} /> : <i className={`${iconStyle} ${iconClasses} fa-3x`} />;
-    const overlayStyles = loading ? css({opacity: 0.75}) : iconClasses ? css({"&:hover": {opacity: 0.75}}) : "";
+    const icon = loading ? <i className={`${iconStyle} fas fa-spinner fa-spin`} /> : <i className={`${iconStyle} ${iconClasses} fa-3x`} />;
+    const overlayStyles = loading ? css({ opacity: 0.75 }) : iconClasses ? css({ "&:hover": { opacity: 0.75 } }) : "";
 
     return (
         <div className={`${classes.root} ${backgroundImage}`} onClick={clickAction}>

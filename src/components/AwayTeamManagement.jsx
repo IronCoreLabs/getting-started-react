@@ -20,11 +20,11 @@ const classes = stylesListToClassNames({
     section: { padding: 22 },
     mainHeaderText: {
         color: "#000",
-        fontFamily: "ProximaNova-Bold",
+        fontWeight: "bold",
     },
     headerText: {
         color: "#929292",
-        fontFamily: "ProximaNova-Bold",
+        fontWeight: "bold",
         fontSize: 14,
         marginTop: 20,
     },
@@ -33,7 +33,6 @@ const classes = stylesListToClassNames({
         border: "2px dashed #ccc",
         color: "#929292",
         display: "flex",
-        fontFamily: "ProximaNova-Regular",
         fontSize: 14,
         height: 40,
         justifyContent: "center",
@@ -73,19 +72,17 @@ const classes = stylesListToClassNames({
     },
     userName: {
         color: "#000",
-        fontFamily: "ProximaNova-Regular",
         fontSize: 16,
         paddingBottom: 4,
     },
     userRole: {
         color: "#929292",
-        fontFamily: "ProximaNova-Bold",
+        fontWeight: "bold",
         fontSize: 14,
     },
     toggleMenuButton: {
         color: "#0ABFD6",
         cursor: "pointer",
-        fontFamily: "ProximaNova-Regular",
         fontSize: 16,
         letterSpacing: ".05em",
         marginRight: 30,

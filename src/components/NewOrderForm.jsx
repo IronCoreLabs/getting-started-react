@@ -41,7 +41,7 @@ const classes = stylesListToClassNames({
         border: "1px solid #FFF",
         borderRadius: 3,
         color: "#FFF",
-        fontFamily: "ProximaNova-Light",
+        fontWeight: "light",
         fontSize: 16,
         letterSpacing: ".05em",
         outline: "none",

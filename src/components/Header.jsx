@@ -16,6 +16,7 @@ const classes = stylesListToClassNames({
         fontWeight: 400,
         justifyContent: "space-between",
         padding: "10px 30px",
+        fontFamily: 'ProximaNova'
     },
     activeUser: {
         alignItems: "center",
@@ -37,7 +38,7 @@ const classes = stylesListToClassNames({
     dropdownShow: { display: "block !important" },
     loginText: {
         color: "#929292",
-        fontFamily: "ProximaNova-Bold",
+        fontWeight: "bold",
         fontSize: 14,
         marginBottom: 15,
     },
@@ -60,7 +61,7 @@ const classes = stylesListToClassNames({
     userText: { marginLeft: 20 },
     userRole: {
         color: "#929292",
-        fontFamily: "ProximaNova-Bold",
+        fontWeight: "bold",
         fontSize: 12,
         letterSpacing: ".02em",
         paddingTop: 5,
@@ -75,7 +76,7 @@ const classes = stylesListToClassNames({
     },
     ironTitle: {
         color: "black",
-        fontFamily: "ProximaNova-Bold",
+        fontWeight: "bold",
         marginLeft: 10,
         paddingRight: 10,
         textTransform: "uppercase",
@@ -86,18 +87,16 @@ const classes = stylesListToClassNames({
     },
     activeUserName: {
         color: "#000",
-        fontFamily: "ProximaNova-Bold",
+        fontWeight: "bold",
         letterSpacing: "-0.14px",
         textAlign: "right",
     },
     userName: {
         color: "#000",
-        fontFamily: "ProximaNova-Regular",
         fontSize: 14,
     },
     actingAs: {
         color: "#BDBDBD",
-        fontFamily: "ProximaNova-Regular",
         fontSize: 14,
         letterSpacing: "-0.14px",
         textAlign: "right",
@@ -193,7 +192,6 @@ class Header extends React.Component {
     }
 
     render() {
-        console.log(this.state.dropdownOpen);
         return (
             <header className={classes.nav}>
                 <div className={classes.titleContainer}>

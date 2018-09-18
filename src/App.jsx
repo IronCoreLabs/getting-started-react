@@ -1,37 +1,32 @@
 import * as React from "react";
-import {connect} from "react-redux";
-import {setAwayTeam} from "./actions/AwayTeamActions";
+import { connect } from "react-redux";
+import { setAwayTeam } from "./actions/AwayTeamActions";
 import Header from "./components/Header";
 import OrderList from "./components/OrderList";
 import NewOrderForm from "./components/NewOrderForm";
-import AwayTeamManagement from "./components/AwayTeamManagement";
-import {initializeAsUser, getTestGroupDetails} from "./lib/Initialization";
-import {KIRK} from "./Constants";
-import {stylesListToClassNames} from "./lib/Utils";
+import { initializeAsUser, getTestGroupDetails } from "./lib/Initialization";
+import { KIRK } from "./Constants";
+import { stylesListToClassNames } from "./lib/Utils";
 import logo from "./logo-black.svg";
 
 const classes = stylesListToClassNames({
     main: {
+        alignItems: "center",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        backgroundColor: "#F6F8FA",
         "& h1": {
             margin: 20,
         },
     },
-    panelSections: {
-        marginTop: 40,
-        width: "100%",
-        display: "flex",
-        justifyContent: "space-around",
+    orderSection: {
+        maxWidth: 550,
+        width: "100vw",
     },
-    orderSection: {minWidth: 550},
     loaderWrapper: {
-        display: "flex",
-        justifyContent: "center",
         alignItems: "center",
+        display: "flex",
         height: "90vh",
+        justifyContent: "center",
     },
 });
 
@@ -50,9 +45,9 @@ export class App extends React.Component {
             .then(() => getTestGroupDetails())
             .then((group) => {
                 this.props.setAwayTeam(group);
-                this.setState({initializing: false, error: false});
+                this.setState({ initializing: false, error: false });
             })
-            .catch(() => this.setState({initializing: false, error: true}));
+            .catch(() => this.setState({ initializing: false, error: true }));
     }
 
     /**
@@ -62,7 +57,7 @@ export class App extends React.Component {
         return (
             <div className={classes.loaderWrapper}>
                 <div id="initLoader">
-                    <img src={logo} height="200" width="200" alt="" />
+                    <img src={logo} height="70" width="70" alt="" />
                 </div>
             </div>
         );
@@ -83,13 +78,9 @@ export class App extends React.Component {
             <React.Fragment>
                 <Header />
                 <main className={classes.main}>
-                    <h1>Welcome to the Enterprise Messaging System</h1>
-                    <div className={classes.panelSections}>
-                        <div className={classes.orderSection}>
-                            <OrderList />
-                            <NewOrderForm />
-                        </div>
-                        <AwayTeamManagement />
+                    <div className={classes.orderSection}>
+                        <NewOrderForm />
+                        <OrderList />
                     </div>
                 </main>
             </React.Fragment>
@@ -99,5 +90,5 @@ export class App extends React.Component {
 
 export default connect(
     null,
-    {setAwayTeam}
+    { setAwayTeam }
 )(App);

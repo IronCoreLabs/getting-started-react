@@ -1,47 +1,54 @@
 import * as React from "react";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import Paper from "./Paper";
-import {createOrder} from "../actions/OrderActions";
-import {stylesListToClassNames} from "../lib/Utils";
+import { createOrder } from "../actions/OrderActions";
+import { stylesListToClassNames } from "../lib/Utils";
 import showSnackbar from "../lib/Snackbar";
 
 const classes = stylesListToClassNames({
     headerText: {
-        textAlign: "center",
+        color: "#BDBDBD",
+        fontFamily: "Monaco",
+        fontSize: 16,
+        letterSpacing: "-0.4px",
+        marginBottom: 20,
         marginTop: 25,
     },
     orderHeader: {
-        fontSize: 18,
-        padding: "7px 0",
-        margin: "10px 0",
-        display: "flex",
         borderBottom: "1px solid #D9D9D9",
+        display: "flex",
+        fontSize: 18,
+        margin: "10px 0",
+        padding: "7px 0",
         "& :first-child": {
-            width: 60,
             fontWeight: "bold",
             padding: "0 7px",
+            width: 60,
         },
     },
     genericInput: {
-        width: "85%",
-        fontSize: 18,
-        padding: 7,
         border: "1px solid #D9D9D9",
         borderLeft: "3px solid #F44336",
-        margin: "15px 0",
         display: "block",
+        fontSize: 18,
+        margin: "15px 0",
+        outline: "none",
+        padding: 7,
+        width: "85%",
     },
     button: {
-        background: "#F44336",
-        borderRadius: 4,
+        background: "#0ABFD6",
+        border: "1px solid #FFF",
+        borderRadius: 3,
         color: "#FFF",
-        cursor: "pointer",
+        fontWeight: "light",
         fontSize: 16,
-        fontWeight: 200,
-        padding: "6px 20px",
-        textTransform: "uppercase",
+        letterSpacing: ".05em",
+        outline: "none",
+        padding: "15px 30px",
+        textAlign: "center",
     },
-    buttonIcon: {margin: "0 10px 0 -7px"},
+    buttonIcon: { margin: "0 10px 0 -7px" }
 });
 
 class NewOrderForm extends React.Component {
@@ -62,15 +69,15 @@ class NewOrderForm extends React.Component {
         if (this.state.savingOrder || !this.state.orderTitle.trim() || !this.state.orderBody.trim()) {
             return;
         }
-        this.setState({savingOrder: true});
+        this.setState({ savingOrder: true });
         this.props.createOrder(
             this.state.orderTitle.trim(),
             this.state.orderBody.trim(),
             () => {
-                this.setState({savingOrder: false, orderTitle: "", orderBody: ""});
+                this.setState({ savingOrder: false, orderTitle: "", orderBody: "" });
                 showSnackbar("New order created successfully");
             },
-            () => this.setState({savingOrder: false})
+            () => this.setState({ savingOrder: false })
         );
     }
 
@@ -78,24 +85,24 @@ class NewOrderForm extends React.Component {
      * Keep order title mirrored in state and update its value.
      */
     updateOrderTitle(event) {
-        this.setState({orderTitle: event.target.value});
+        this.setState({ orderTitle: event.target.value });
     }
 
     /**
      * Keep order body mirrored in state and update its value.
      */
     updateOrderBody(event) {
-        this.setState({orderBody: event.target.value});
+        this.setState({ orderBody: event.target.value });
     }
 
     render() {
         if (!this.props.isActiveAwayTeamAdmin) {
             return null;
         }
-        const iconClasses = this.state.savingOrder ? "fas fa-spinner fa-spin" : "fas fa-broadcast-tower";
+        const iconClasses = this.state.savingOrder ? "fas fa-spinner fa-spin" : "";
         return (
             <React.Fragment>
-                <h3 className={classes.headerText}>Add Away Team Order</h3>
+                <h3 className={classes.headerText}>Encrypt an order to the away-team:</h3>
                 <Paper>
                     <div className={classes.orderHeader}>
                         <div>From:</div>
@@ -108,20 +115,20 @@ class NewOrderForm extends React.Component {
                     <input
                         className={classes.genericInput}
                         type="text"
-                        placeholder="Order Title"
+                        placeholder="Your Order Title..."
                         value={this.state.orderTitle}
                         onChange={this.updateOrderTitle.bind(this)}
                     />
                     <textarea
                         className={`${classes.textarea} ${classes.genericInput}`}
-                        placeholder="Enter your order message..."
+                        placeholder="Your order to encrypt..."
                         rows={6}
                         onChange={this.updateOrderBody.bind(this)}
                         value={this.state.orderBody}
                     />
                     <button className={classes.button} onClick={this.submitNewOrder.bind(this)}>
                         <i className={`${classes.buttonIcon} ${iconClasses}`} />
-                        Submit Order
+                        Encrypt your order
                     </button>
                 </Paper>
             </React.Fragment>
@@ -135,5 +142,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps,
-    {createOrder}
+    { createOrder }
 )(NewOrderForm);

@@ -16,7 +16,6 @@ const classes = stylesListToClassNames({
         fontWeight: 400,
         justifyContent: "space-between",
         padding: "10px 30px",
-        fontFamily: 'ProximaNova'
     },
     activeUser: {
         alignItems: "center",
@@ -99,6 +98,7 @@ const classes = stylesListToClassNames({
         color: "#BDBDBD",
         fontSize: 14,
         letterSpacing: "-0.14px",
+        marginBottom: 5,
         textAlign: "right",
     },
     rightSection: {

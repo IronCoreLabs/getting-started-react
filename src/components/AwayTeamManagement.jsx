@@ -1,9 +1,9 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import AvatarHoverAction from "./AvatarHoverAction";
-import { Users, KIRK } from "../Constants";
-import { addUserToAwayTeam, removeUserFromAwayTeam } from "../actions/AwayTeamActions";
-import { stylesListToClassNames } from "../lib/Utils";
+import {Users, KIRK} from "../Constants";
+import {addUserToAwayTeam, removeUserFromAwayTeam} from "../actions/AwayTeamActions";
+import {stylesListToClassNames} from "../lib/Utils";
 
 const classes = stylesListToClassNames({
     header: {
@@ -17,7 +17,7 @@ const classes = stylesListToClassNames({
         padding: 22,
         top: 0,
     },
-    section: { padding: 22 },
+    section: {padding: 22},
     mainHeaderText: {
         color: "#000",
         fontWeight: "bold",
@@ -51,7 +51,7 @@ const classes = stylesListToClassNames({
         width: "50%",
         zIndex: 20,
     },
-    menuOpen: { display: "block" },
+    menuOpen: {display: "block"},
     userRow: {
         alignItems: "center",
         borderBottom: "1px solid #F2F2F2",
@@ -68,7 +68,7 @@ const classes = stylesListToClassNames({
         justifyContent: "space-between",
     },
     userDescription: {
-        paddingLeft: 20
+        paddingLeft: 20,
     },
     userName: {
         color: "#000",
@@ -88,7 +88,7 @@ const classes = stylesListToClassNames({
         marginRight: 30,
         textAlign: "right",
         textTransform: "uppercase",
-    }
+    },
 });
 
 class AwayTeamManagement extends React.Component {
@@ -96,7 +96,7 @@ class AwayTeamManagement extends React.Component {
         super(props);
         this.state = {
             menuOpen: false,
-            loadingUserID: null
+            loadingUserID: null,
         };
     }
 
@@ -104,15 +104,15 @@ class AwayTeamManagement extends React.Component {
      * Open or close away team management menu based on menuOpen state
      */
     toggleMenuOpen = () => {
-        this.setState({ menuOpen: !this.state.menuOpen });
-    }
+        this.setState({menuOpen: !this.state.menuOpen});
+    };
 
     /**
      * Kick off action to add the provided user to the away team
      */
     addUser(user) {
-        this.setState({ loadingUserID: user.id });
-        const clearLoading = () => this.setState({ loadingUserID: null });
+        this.setState({loadingUserID: user.id});
+        const clearLoading = () => this.setState({loadingUserID: null});
         this.props.addUserToAwayTeam(user, clearLoading, clearLoading);
     }
 
@@ -120,8 +120,8 @@ class AwayTeamManagement extends React.Component {
      * Kick off action to removed the provided user from the away team
      */
     removeUser(user) {
-        this.setState({ loadingUserID: user.id });
-        const clearLoading = () => this.setState({ loadingUserID: null });
+        this.setState({loadingUserID: user.id});
+        const clearLoading = () => this.setState({loadingUserID: null});
         this.props.removeUserFromAwayTeam(user, clearLoading, clearLoading);
     }
 
@@ -137,17 +137,13 @@ class AwayTeamManagement extends React.Component {
             .map((user) => (
                 <div className={classes.userRow} onClick={() => this.addUser(user)} key={user.id}>
                     <div className={classes.userLeft}>
-                        <AvatarHoverAction
-                            loading={this.state.loadingUserID === user.id}
-                            src={user.img}
-                            size={40}
-                        />
+                        <AvatarHoverAction loading={this.state.loadingUserID === user.id} src={user.img} size={40} />
                         <div className={classes.userDescription}>
                             <p className={classes.userName}>{user.name}</p>
                             <p className={classes.userRole}>Starship Enterprise</p>
                         </div>
                     </div>
-                    <i className="fas fa-plus"></i>
+                    <i className="fas fa-plus" />
                 </div>
             ));
         return <div>{crewList}</div>;
@@ -183,7 +179,7 @@ class AwayTeamManagement extends React.Component {
                             <p className={classes.userRole}>Away-team Group</p>
                         </div>
                     </div>
-                    <i className="fas fa-times"></i>
+                    <i className="fas fa-times" />
                 </div>
             ));
         return awayTeam;
@@ -191,10 +187,10 @@ class AwayTeamManagement extends React.Component {
 
     getMenuMarkup() {
         return (
-            <div className={`${classes.sideBar} ${this.state.menuOpen ? classes.menuOpen : ''}`}>
+            <div className={`${classes.sideBar} ${this.state.menuOpen ? classes.menuOpen : ""}`}>
                 <div className={classes.header}>
-                    <h2 className={classes.mainHeaderText}>Group Management</h2>
-                    <i className="fas fa-times" onClick={() => this.toggleMenuOpen()}></i>
+                    <h2 className={classes.mainHeaderText}>Away Team Management</h2>
+                    <i className="fas fa-times" onClick={() => this.toggleMenuOpen()} />
                 </div>
                 <div className={classes.section}>
                     <div className={classes.headerText}>Away-Team Group Members</div>
@@ -202,7 +198,7 @@ class AwayTeamManagement extends React.Component {
                     <div className={classes.headerText}>Starship Enterprise Crew</div>
                     {this.getCrewMemberList()}
                 </div>
-            </div >
+            </div>
         );
     }
 
@@ -212,8 +208,10 @@ class AwayTeamManagement extends React.Component {
         }
         return (
             <React.Fragment>
-                <h2 onClick={() => this.toggleMenuOpen()} className={classes.toggleMenuButton}>Add Member</h2>
-                {this.state.menuOpen ? this.getMenuMarkup() : ''}
+                <h2 onClick={() => this.toggleMenuOpen()} className={classes.toggleMenuButton}>
+                    Manage Away Team
+                </h2>
+                {this.state.menuOpen ? this.getMenuMarkup() : ""}
             </React.Fragment>
         );
     }
@@ -226,5 +224,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps,
-    { addUserToAwayTeam, removeUserFromAwayTeam }
+    {addUserToAwayTeam, removeUserFromAwayTeam}
 )(AwayTeamManagement);

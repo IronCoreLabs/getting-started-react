@@ -1,11 +1,11 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import logo from "../logo-black.svg";
 import AvatarHoverAction from "./AvatarHoverAction";
 import AwayTeamManagement from "../components/AwayTeamManagement";
-import { Users } from "../Constants";
-import { changeActiveUser } from "../actions/UserActions";
-import { stylesListToClassNames } from "../lib/Utils";
+import {Users} from "../Constants";
+import {changeActiveUser} from "../actions/UserActions";
+import {stylesListToClassNames} from "../lib/Utils";
 
 const classes = stylesListToClassNames({
     nav: {
@@ -34,7 +34,7 @@ const classes = stylesListToClassNames({
         width: 320,
         zIndex: 30,
     },
-    dropdownShow: { display: "block !important" },
+    dropdownShow: {display: "block !important"},
     loginText: {
         color: "#929292",
         fontWeight: "bold",
@@ -50,14 +50,15 @@ const classes = stylesListToClassNames({
         padding: "7px 15px",
         textAlign: "right",
         width: "calc(100% + 10px)",
-        "&:hover": { backgroundColor: "#EEE" },
+        cursor: "pointer",
+        "&:hover": {backgroundColor: "#EEE"},
     },
     userInfo: {
         alignItems: "center",
         display: "flex",
         textAlign: "left",
     },
-    userText: { marginLeft: 20 },
+    userText: {marginLeft: 20},
     userRole: {
         color: "#929292",
         fontWeight: "bold",
@@ -65,13 +66,12 @@ const classes = stylesListToClassNames({
         letterSpacing: ".02em",
         paddingTop: 5,
     },
-    chevron: { color: "#CCC" },
+    chevron: {color: "#CCC"},
     titleContainer: {
         alignItems: "center",
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
-
     },
     ironTitle: {
         color: "black",
@@ -82,7 +82,7 @@ const classes = stylesListToClassNames({
     },
     userDescription: {
         marginRight: 15,
-        textAlign: "right"
+        textAlign: "right",
     },
     activeUserName: {
         color: "#000",
@@ -105,7 +105,7 @@ const classes = stylesListToClassNames({
         alignItems: "center",
         display: "flex",
         flexDirection: "row",
-    }
+    },
 });
 
 class Header extends React.Component {
@@ -122,7 +122,7 @@ class Header extends React.Component {
      */
     componentDidMount() {
         window.addEventListener("click", () => {
-            this.setState({ dropdownOpen: false });
+            this.setState({dropdownOpen: false});
         });
     }
 
@@ -130,9 +130,9 @@ class Header extends React.Component {
      * Display the user selection dropdown.
      */
     showDropdown(event) {
-        console.log(event)
+        console.log(event);
         event.stopPropagation();
-        this.setState({ dropdownOpen: true });
+        this.setState({dropdownOpen: true});
     }
 
     /**
@@ -140,9 +140,9 @@ class Header extends React.Component {
      */
     changeUser(user, event) {
         event.stopPropagation();
-        this.setState({ changingUserID: user.id });
+        this.setState({changingUserID: user.id});
         this.props.changeActiveUser(user, () => {
-            this.setState({ dropdownOpen: false, changingUserID: null });
+            this.setState({dropdownOpen: false, changingUserID: null});
         });
     }
 
@@ -204,7 +204,7 @@ class Header extends React.Component {
                     <div className={classes.activeUser} onClick={this.showDropdown.bind(this)}>
                         <div className={classes.userDescription}>
                             <p className={classes.actingAs}>Acting as:</p>
-                            <p className={classes.activeUserName}>  {this.props.activeUser.name}</p>
+                            <p className={classes.activeUserName}> {this.props.activeUser.name}</p>
                         </div>
                         <AvatarHoverAction src={this.props.activeUser.img} size={40} />
                         <div className={`${classes.dropdown} ${this.state.dropdownOpen ? classes.dropdownShow : ""}`}>{this.getDropDownMarkup()}</div>
@@ -222,5 +222,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps,
-    { changeActiveUser }
+    {changeActiveUser}
 )(Header);

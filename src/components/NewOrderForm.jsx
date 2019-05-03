@@ -1,8 +1,8 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import Paper from "./Paper";
-import { createOrder } from "../actions/OrderActions";
-import { stylesListToClassNames } from "../lib/Utils";
+import {createOrder} from "../actions/OrderActions";
+import {stylesListToClassNames} from "../lib/Utils";
 import showSnackbar from "../lib/Snackbar";
 
 const classes = stylesListToClassNames({
@@ -20,7 +20,7 @@ const classes = stylesListToClassNames({
         fontSize: 18,
         margin: "10px 0",
         padding: "7px 0",
-        "& :first-child": {
+        "& :first-of-type(div)": {
             fontWeight: "bold",
             padding: "0 7px",
             width: 60,
@@ -48,7 +48,7 @@ const classes = stylesListToClassNames({
         padding: "15px 30px",
         textAlign: "center",
     },
-    buttonIcon: { margin: "0 10px 0 -7px" }
+    buttonIcon: {margin: "0 10px 0 -7px"},
 });
 
 class NewOrderForm extends React.Component {
@@ -69,15 +69,15 @@ class NewOrderForm extends React.Component {
         if (this.state.savingOrder || !this.state.orderTitle.trim() || !this.state.orderBody.trim()) {
             return;
         }
-        this.setState({ savingOrder: true });
+        this.setState({savingOrder: true});
         this.props.createOrder(
             this.state.orderTitle.trim(),
             this.state.orderBody.trim(),
             () => {
-                this.setState({ savingOrder: false, orderTitle: "", orderBody: "" });
+                this.setState({savingOrder: false, orderTitle: "", orderBody: ""});
                 showSnackbar("New order created successfully");
             },
-            () => this.setState({ savingOrder: false })
+            () => this.setState({savingOrder: false})
         );
     }
 
@@ -85,14 +85,14 @@ class NewOrderForm extends React.Component {
      * Keep order title mirrored in state and update its value.
      */
     updateOrderTitle(event) {
-        this.setState({ orderTitle: event.target.value });
+        this.setState({orderTitle: event.target.value});
     }
 
     /**
      * Keep order body mirrored in state and update its value.
      */
     updateOrderBody(event) {
-        this.setState({ orderBody: event.target.value });
+        this.setState({orderBody: event.target.value});
     }
 
     render() {
@@ -142,5 +142,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps,
-    { createOrder }
+    {createOrder}
 )(NewOrderForm);

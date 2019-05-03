@@ -14,17 +14,17 @@
         "secure": "node src/server.js &! REACT_APP_SECURE=true react-scripts start"
     },
     "dependencies": {
-        "@ironcorelabs/ironweb": "^1.0.11",
-        "emotion": "^9.2.6",
-        "es6-promise": "^4.2.4",
-        "jsonwebtoken": "^8.3.0",
-        "react": "16.4.2",
-        "react-dom": "16.4.2",
-        "react-redux": "^5.0.7",
-        "react-scripts": "1.1.4",
-        "redux": "^4.0.0",
+        "@ironcorelabs/ironweb": "^1.2.3",
+        "emotion": "^10.0.9",
+        "es6-promise": "^4.2.6",
+        "jsonwebtoken": "^8.5.1",
+        "react": "16.8.6",
+        "react-dom": "16.8.6",
+        "react-redux": "^7.0.3",
+        "react-scripts": "3.0.0",
+        "redux": "^4.0.1",
         "redux-thunk": "^2.3.0",
-        "whatwg-fetch": "^2.0.4"
+        "whatwg-fetch": "^3.0.0"
     },
     "prettier": {
         "printWidth": 160,
@@ -36,5 +36,17 @@
     },
     "eslintConfig": {
         "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">1.0%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
     }
 }

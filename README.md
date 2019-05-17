@@ -40,3 +40,6 @@ After running either of these NPM scripts your application should automatically 
 ## A Note on API Keys
 
 This application ships with a pre-generated set of API keys in order to simplify getting started. You can also generate your [own API keys](https://admin.ironcorelabs.com) to use as well. Just change the configuration within the `./ironcore-config.json` file and replace the existing `./private.key` file with yours.
+
+Copyright (c)  2017-present  IronCore Labs, Inc.
+All rights reserved.

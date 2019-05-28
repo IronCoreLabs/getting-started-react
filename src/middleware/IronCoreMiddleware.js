@@ -10,7 +10,7 @@ function encryptNewOrder(next, action, awayTeamID) {
         .then((encryptedDoc) => {
             next({
                 ...action,
-                payload: {...action.payload, body: encryptedDoc.document, id: encryptedDoc.documentID, encrypted: true},
+                payload: {...action.payload, body: IronWeb.codec.base64.fromBytes(encryptedDoc.document), id: encryptedDoc.documentID, encrypted: true},
             });
         })
         .catch((e) => {
@@ -26,7 +26,7 @@ function encryptNewOrder(next, action, awayTeamID) {
  */
 function decryptOrder(next, action) {
     IronWeb.document
-        .decrypt(action.payload.id, action.payload.body)
+        .decrypt(action.payload.id, IronWeb.codec.base64.toBytes(action.payload.body))
         .then((decryptedDoc) => {
             next({
                 ...action,

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {createStore, applyMiddleware} from "redux";
+import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import ReduxThunk from "redux-thunk";
 import apiMiddleware from "./middleware/ApiMiddleware";
@@ -29,8 +29,9 @@ function getMiddleware() {
     return middleware;
 }
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // prettier-ignore
-const store = createStore(rootReducer, applyMiddleware(...getMiddleware()));
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(...getMiddleware())));
 
 ReactDOM.render(
     <Provider store={store}>

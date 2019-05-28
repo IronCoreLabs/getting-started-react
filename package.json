@@ -14,7 +14,7 @@
         "secure": "node src/server.js &! REACT_APP_SECURE=true react-scripts start"
     },
     "dependencies": {
-        "@ironcorelabs/ironweb": "^1.2.3",
+        "@ironcorelabs/ironweb": "^2.0.1",
         "emotion": "^10.0.9",
         "es6-promise": "^4.2.6",
         "jsonwebtoken": "^8.5.1",

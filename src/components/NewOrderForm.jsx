@@ -1,9 +1,9 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import Paper from "./Paper";
 import {createOrder} from "../actions/OrderActions";
-import {stylesListToClassNames} from "../lib/Utils";
 import showSnackbar from "../lib/Snackbar";
+import {stylesListToClassNames} from "../lib/Utils";
+import Paper from "./Paper";
 
 const classes = stylesListToClassNames({
     headerText: {

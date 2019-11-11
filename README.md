@@ -4,7 +4,7 @@ IronCore is an SDK and cloud service that keeps application data private and sec
 
 ## Tutorial
 
-[Follow the tutorial to get started.](https://docs.ironcorelabs.com/getting-started/react)
+[Follow the tutorial to get started.](https://ironcorelabs.com/docs/getting-started/react)
 
 ## Setting Up The Application
 

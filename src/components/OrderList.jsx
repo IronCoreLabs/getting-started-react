@@ -1,11 +1,11 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { listOrders, getOrder } from "../actions/OrderActions";
-import Paper from "./Paper";
+import {connect} from "react-redux";
+import {getOrder, listOrders} from "../actions/OrderActions";
 import insignia from "../avatars/insignia.png";
-import LoadingPlaceholder from "./LoadingPlaceholder";
+import {stylesListToClassNames} from "../lib/Utils";
 import AvatarHoverAction from "./AvatarHoverAction";
-import { stylesListToClassNames } from "../lib/Utils";
+import LoadingPlaceholder from "./LoadingPlaceholder";
+import Paper from "./Paper";
 
 const classes = stylesListToClassNames({
     headerText: {
@@ -23,9 +23,9 @@ const classes = stylesListToClassNames({
         padding: "10px 15px",
         textAlign: "center",
     },
-    warning: { backgroundColor: "#FDDC3B" },
-    info: { backgroundColor: "#0ABFD6" },
-    icon: { marginRight: 15 },
+    warning: {backgroundColor: "#FDDC3B"},
+    info: {backgroundColor: "#0ABFD6"},
+    icon: {marginRight: 15},
     orderRow: {
         borderBottom: "1px solid #E4E4E4",
         cursor: "pointer",
@@ -34,8 +34,8 @@ const classes = stylesListToClassNames({
         marginLeft: "-15px",
         padding: "10px 30px",
         width: "calc(100% - 15px)",
-        "&:last-child": { borderBottom: "none" },
-        "&:hover": { backgroundColor: "#EEE" },
+        "&:last-child": {borderBottom: "none"},
+        "&:hover": {backgroundColor: "#EEE"},
     },
     orderHeader: {
         alignItems: "center",
@@ -72,21 +72,23 @@ class OrderList extends React.Component {
         this.state = {
             loadingRow: false,
             expandedRow: "",
+            activeUser: props.activeUser,
         };
     }
 
     /**
      * Prop updates to determine if we should clear the loading and/or currently expanded order row
      */
-    componentWillReceiveProps(nextProps) {
+    static getDerivedStateFromProps(nextProps, state) {
         //If we've loaded the data for the current expanded row, clear the loading state
-        if (this.state.expandedRow && typeof nextProps.orders[this.state.expandedRow].body === "string") {
-            this.setState({ loadingRow: false });
+        if (state.expandedRow && typeof nextProps.orders[state.expandedRow].body === "string") {
+            return {loadingRow: false, activeUser: nextProps.activeUser};
         }
         //If the currently logged in user changes, reset the currently expanded row
-        if (nextProps.activeUser !== this.props.activeUser) {
-            this.setState({ expandedRow: null });
+        if (nextProps.activeUser !== state.activeUser) {
+            return {expandedRow: null, activeUser: nextProps.activeUser};
         }
+        return null;
     }
 
     /**
@@ -96,15 +98,15 @@ class OrderList extends React.Component {
     expandRow(orderID) {
         //If the user is collapsing this order, just clear out the expandedRow state
         if (this.state.expandedRow === orderID) {
-            return this.setState({ expandedRow: null });
+            return this.setState({expandedRow: null});
         }
         //If the data has already been loaded, just display it
         if (typeof this.props.orders[orderID].body === "string") {
-            return this.setState({ expandedRow: orderID });
+            return this.setState({expandedRow: orderID});
         }
         //Otherwise, set a loading indicator and request the order
-        this.setState({ expandedRow: orderID, loadingRow: true });
-        this.props.getOrder(orderID, () => this.setState({ loadingRow: false, expandedRow: null }));
+        this.setState({expandedRow: orderID, loadingRow: true});
+        this.props.getOrder(orderID, () => this.setState({loadingRow: false, expandedRow: null}));
     }
 
     /**
@@ -185,5 +187,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps,
-    { listOrders, getOrder }
+    {listOrders, getOrder}
 )(OrderList);

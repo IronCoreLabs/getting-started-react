@@ -1,11 +1,11 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import logo from "../logo-black.svg";
-import AvatarHoverAction from "./AvatarHoverAction";
+import {changeActiveUser} from "../actions/UserActions";
 import AwayTeamManagement from "../components/AwayTeamManagement";
 import {Users} from "../Constants";
-import {changeActiveUser} from "../actions/UserActions";
 import {stylesListToClassNames} from "../lib/Utils";
+import logo from "../logo-black.svg";
+import AvatarHoverAction from "./AvatarHoverAction";
 
 const classes = stylesListToClassNames({
     nav: {
@@ -130,7 +130,6 @@ class Header extends React.Component {
      * Display the user selection dropdown.
      */
     showDropdown(event) {
-        console.log(event);
         event.stopPropagation();
         this.setState({dropdownOpen: true});
     }

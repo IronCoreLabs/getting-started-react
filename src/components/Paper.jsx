@@ -1,6 +1,6 @@
+import {css} from "emotion";
 import * as React from "react";
-import { css } from "emotion";
-import { stylesListToClassNames } from "../lib/Utils";
+import {stylesListToClassNames} from "../lib/Utils";
 
 const classes = stylesListToClassNames({
     paper: {
@@ -14,9 +14,9 @@ const classes = stylesListToClassNames({
     },
 });
 
-export default ({ children, size }) => {
+export default ({children, size}) => {
     const fixedSize = size || "auto";
-    const paperWithSize = css(classes.paper, { height: fixedSize, width: fixedSize });
+    const paperWithSize = css(classes.paper, {height: fixedSize, width: fixedSize});
 
     return <div className={paperWithSize}>{children}</div>;
 };

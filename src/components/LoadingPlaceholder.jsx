@@ -14,10 +14,12 @@ const classes = stylesListToClassNames({
 /**
  * Display a block with an icon used to denote a loading section
  */
-export default function() {
+const ph = () => {
     return (
         <div className={classes.root}>
             <i className="fas fa-spinner fa-spin fa-2x" />
         </div>
     );
 }
+
+export default ph;

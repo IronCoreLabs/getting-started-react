@@ -1,4 +1,4 @@
-import {css} from "emotion";
+import {css} from "@emotion/css";
 
 const GROUP_ID_STORAGE_KEY = "ironcore-test-group";
 

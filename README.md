@@ -18,24 +18,24 @@ cd getting-started-react
 Then, install all dependencies
 
 ```
-npm install
+yarn install
 ```
 
 The application can then be started in two different modes:
 
 ```
-npm run insecure
+yarn run insecure
 ```
 
 Will start the application without encrypting any of the orders you create. This gives you a sense of how the application works before adding in the IronWeb SDK. Once you get a sense for how this works you can then run
 
 ```
-npm run secure
+yarn run secure
 ```
 
 Which will layer in the Redux middleware for encrypting and decrypting orders. You can switch back and forth between these two different modes at anytime to see how the application behaves with and without the IronWeb SDK.
 
-After running either of these NPM scripts your application should automatically open and be running locally at [http://localhost:3000](http://localhost:3000).
+After running either of these yarn scripts your application should automatically open and be running locally at [http://localhost:3000](http://localhost:3000).
 
 ## A Note on API Keys
 

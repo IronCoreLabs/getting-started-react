@@ -7,7 +7,7 @@ const defaultState = {
 /**
  * Away Team management reducer. Keeps track of which users are members and admins of the away-team
  */
-export default function(state = defaultState, action) {
+const reducer = (state = defaultState, action) => {
     if (action.type === "SET_AWAY_TEAM") {
         //Set initial details about the away team
         return {
@@ -32,3 +32,5 @@ export default function(state = defaultState, action) {
     }
     return state;
 }
+
+export default reducer;

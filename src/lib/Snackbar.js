@@ -28,7 +28,7 @@ function dismissAfterTimeout(item) {
  * @param type    Type of message to display. Either success/info/error/warning
  * @param timeout Length in ms that snackbar will appear
  */
-export default function(message, type = "success") {
+const snackbar = (message, type = "success") => {
     const timeout = type === "error" ? 4000 : 2000;
     dismissSnackbar(previous, true);
     const snackbar = document.createElement("div");
@@ -56,3 +56,5 @@ export default function(message, type = "success") {
     snackbar.style.top = `${window.scrollY + 40}px`;
     snackbar.style.opacity = "1";
 }
+
+export default snackbar;

@@ -3,7 +3,7 @@ const defaultState = {};
 /**
  * Orders reducer. Keeps track of list of orders and adds new ones to the list.
  */
-export default function(state = defaultState, action) {
+const reducer = (state = defaultState, action) => {
     if (action.type === "LIST_ORDERS") {
         //Convert the array of orders into an object from order ID -> order
         return action.payload.reduce((ordersByID, order) => {
@@ -38,3 +38,5 @@ export default function(state = defaultState, action) {
     }
     return state;
 }
+
+export default reducer;

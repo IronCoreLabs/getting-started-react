@@ -2,7 +2,7 @@
  * Redux middleware function that is responsible for kicking off API requests and dispatches an action once the
  * Promise has resolved successfully.
  */
-export default (store) => (next) => (action) => {
+const middleware = (store) => (next) => (action) => {
     if (typeof action.operation === "function") {
         action
             .operation(action.payload)
@@ -23,3 +23,5 @@ export default (store) => (next) => (action) => {
         next(action);
     }
 };
+
+export default middleware;

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { css } from "emotion";
+import { css } from "@emotion/css";
 import { stylesListToClassNames } from "../lib/Utils";
 
 const classes = stylesListToClassNames({
@@ -20,7 +20,7 @@ const classes = stylesListToClassNames({
     },
 });
 
-export default ({ src, iconClasses, clickAction, iconColor, loading, size }) => {
+const action = ({ src, iconClasses, clickAction, iconColor, loading, size }) => {
     size = size || 110;
     const backgroundImage = css({ background: `url(${src}) 0 0 no-repeat`, backgroundSize: "cover", height: size, width: size });
     const iconStyle = css({ color: iconColor });
@@ -34,3 +34,5 @@ export default ({ src, iconClasses, clickAction, iconColor, loading, size }) => 
         </div>
     );
 };
+
+export default action;

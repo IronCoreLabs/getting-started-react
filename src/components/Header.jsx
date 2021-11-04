@@ -108,6 +108,11 @@ const classes = stylesListToClassNames({
     },
 });
 
+const inlineH1Style = {
+    fontSize: "26px",
+    marginBottom: "5px",
+};
+
 class Header extends React.Component {
     constructor() {
         super();
@@ -195,8 +200,10 @@ class Header extends React.Component {
             <header className={classes.nav}>
                 <div className={classes.titleContainer}>
                     <img src={logo} height="40" width="40" alt="" />
-                    <h1 className={classes.ironTitle}>Iron</h1>
-                    <h1>React</h1>
+                    <h1 className={classes.ironTitle} style={inlineH1Style}>
+                        Iron
+                    </h1>
+                    <h1 style={inlineH1Style}>React</h1>
                 </div>
                 <div className={classes.rightSection}>
                     <AwayTeamManagement />

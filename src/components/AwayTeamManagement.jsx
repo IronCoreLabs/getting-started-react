@@ -21,6 +21,8 @@ const classes = stylesListToClassNames({
     mainHeaderText: {
         color: "#000",
         fontWeight: "bold",
+        fontSize: "24px",
+        marginBottom: "5px",
     },
     headerText: {
         color: "#929292",

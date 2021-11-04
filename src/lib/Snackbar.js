@@ -18,7 +18,6 @@ const classes = stylesListToClassNames({
         opacity: "0",
         padding: "18px 24px",
         position: "absolute",
-        top: "-10px",
         transform: "translate(-50%, 0)",
         transitionDuration: "0.4s",
         transitionProperty: "opacity, top",
@@ -84,7 +83,7 @@ const snackbar = (message, type = "success") => {
     /* eslint-disable */
     getComputedStyle(snackbar).top;
     /* eslint-disable */
-    snackbar.style.top = `${window.scrollY + 40}px`;
+    snackbar.style.top = `${document.getElementById("dcp-gs-chunk").offsetTop - 19}px`;
     snackbar.style.opacity = "1";
 };
 

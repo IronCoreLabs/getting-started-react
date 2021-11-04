@@ -120,7 +120,7 @@ export class App extends React.Component {
             <div className={rootStyles}>
                 <Header />
                 <main className={classes.main}>
-                    <div className={classes.orderSection}>
+                    <div className={classes.orderSection} id="dcp-gs-chunk">
                         <NewOrderForm />
                         <OrderList />
                     </div>

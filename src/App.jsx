@@ -9,7 +9,7 @@ import { KIRK } from "./Constants";
 import { stylesListToClassNames } from "./lib/Utils";
 import logo from "./logo-black.svg";
 import {keyframes} from "@emotion/react";
-import {css, injectGlobal} from "@emotion/css";
+import {css} from "@emotion/css";
 
 const rotate = keyframes`
     from {

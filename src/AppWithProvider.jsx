@@ -27,7 +27,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // prettier-ignore
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(...getMiddleware())));
 
-const AppWithProvider = (
+const AppWithProvider = () => (
     <Provider store={store}>
         <App />
     </Provider>

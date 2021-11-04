@@ -39,7 +39,7 @@ const initLoader = css`
 
 const rootStyles = css`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     height: 100%;
 
     header {

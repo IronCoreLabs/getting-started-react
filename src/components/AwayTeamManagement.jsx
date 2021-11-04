@@ -48,7 +48,7 @@ const classes = stylesListToClassNames({
         maxWidth: 430,
         minWidth: 300,
         position: "fixed",
-        right: 0,
+        left: 0,
         top: 0,
         width: "50%",
         zIndex: 20,
@@ -85,9 +85,9 @@ const classes = stylesListToClassNames({
     toggleMenuButton: {
         color: "#0ABFD6",
         cursor: "pointer",
-        fontSize: 16,
+        fontSize: 12,
         letterSpacing: ".05em",
-        marginRight: 30,
+        // marginRight: 30,
         textAlign: "right",
         textTransform: "uppercase",
     },
@@ -211,12 +211,12 @@ class AwayTeamManagement extends React.Component {
             return null;
         }
         return (
-            <React.Fragment>
-                <h2 onClick={() => this.toggleMenuOpen()} className={classes.toggleMenuButton}>
+            <div>
+                <h3 onClick={() => this.toggleMenuOpen()} className={classes.toggleMenuButton}>
                     Manage Away Team
-                </h2>
+                </h3>
                 {this.state.menuOpen ? this.getMenuMarkup() : ""}
-            </React.Fragment>
+            </div>
         );
     }
 }

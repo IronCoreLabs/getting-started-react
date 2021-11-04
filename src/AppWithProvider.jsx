@@ -13,7 +13,7 @@ import App from "./App";
  */
 function getMiddleware() {
     const middleware = [ReduxThunk];
-    if (process.env.REACT_APP_SECURE) {
+    if (process.env.REACT_APP_SECURE || process.env.NETLIFY) {
         middleware.push(IronCoreMiddleware.encryptionMiddleware);
     }
     middleware.push(apiMiddleware);

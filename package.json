@@ -10,8 +10,8 @@
     },
     "license": "MIT",
     "scripts": {
-        "insecure": "node src/server.js &! react-scripts start",
-        "secure": "node src/server.js &! REACT_APP_SECURE=true react-scripts start"
+        "insecure": "node src/server.js &! REACT_APP_INSECURE=true react-scripts start",
+        "secure": "node src/server.js &! react-scripts start"
     },
     "dependencies": {
         "@emotion/css": "^11.1.3",

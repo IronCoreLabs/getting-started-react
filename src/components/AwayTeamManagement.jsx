@@ -17,7 +17,7 @@ const classes = stylesListToClassNames({
         padding: 22,
         top: 0,
     },
-    section: {padding: 22, height: "50vh", overflowY: "auto"},
+    section: {padding: 22, height: "300px", overflowY: "auto"},
     mainHeaderText: {
         color: "#000",
         fontWeight: "bold",

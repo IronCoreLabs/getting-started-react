@@ -1,4 +1,35 @@
+import {stylesListToClassNames} from "./Utils";
+
 let previous;
+
+const classes = stylesListToClassNames({
+    snackbar: {
+        alignItems: "center",
+        boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.3)",
+        color: "#fff",
+        display: "inline-flex",
+        fontSize: "16px",
+        justifyContent: "center",
+        left: "50%",
+        lineHeight: "22px",
+        marginTop: "20px",
+        minHeight: "14px",
+        minWidth: "300px",
+        opacity: "0",
+        padding: "18px 24px",
+        position: "absolute",
+        top: "-10px",
+        transform: "translate(-50%, 0)",
+        transitionDuration: "0.4s",
+        transitionProperty: "opacity, top",
+        width: "100%",
+    },
+    snackbarSuccess: {backgroundColor: "#00c853"},
+    snackbarError: {backgroundColor: "#d51819"},
+    snackbarInfo: {backgroundColor: "#00bcd4"},
+    snackbarWarning: {backgroundColor: "#fcd92d"},
+    snackbarAction: {background: "inherit", display: "inline-block", border: "none", marginLeft: "24px", padding: "0"},
+});
 
 /**
  * Clear the snackbar either by removing it completely, or by transitioning it out by setting the
@@ -32,7 +63,7 @@ const snackbar = (message, type = "success") => {
     const timeout = type === "error" ? 4000 : 2000;
     dismissSnackbar(previous, true);
     const snackbar = document.createElement("div");
-    snackbar.className = `snackbar snackbar-${type}`;
+    snackbar.className = `${classes.snackbar} ${classes[`snackbar${type.charAt(0).toUpperCase() + type.slice(1)}`]}`;
     snackbar.setAttribute("role", "alert");
     //Adjust top position to account for the users scroll height
     snackbar.style.top = `${window.scrollY}px`;
@@ -55,6 +86,6 @@ const snackbar = (message, type = "success") => {
     /* eslint-disable */
     snackbar.style.top = `${window.scrollY + 40}px`;
     snackbar.style.opacity = "1";
-}
+};
 
 export default snackbar;

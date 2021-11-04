@@ -5,7 +5,6 @@ import {Provider} from "react-redux";
 import ReduxThunk from "redux-thunk";
 import apiMiddleware from "./middleware/ApiMiddleware";
 import * as IronCoreMiddleware from "./middleware/IronCoreMiddleware";
-import "./index.css";
 import rootReducer from "./reducers";
 import App from "./App";
 

@@ -190,7 +190,9 @@ class AwayTeamManagement extends React.Component {
             <div className={`${classes.sideBar} ${this.state.menuOpen ? classes.menuOpen : ""}`}>
                 <div className={classes.header}>
                     <h2 className={classes.mainHeaderText}>Away Team Management</h2>
-                    <i className="fas fa-times" onClick={() => this.toggleMenuOpen()} />
+                    <div onClick={() => this.toggleMenuOpen()}>
+                        <i className="fas fa-times" />
+                    </div>
                 </div>
                 <div className={classes.section}>
                     <div className={classes.headerText}>Away-Team Group Members</div>

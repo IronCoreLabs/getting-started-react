@@ -112,7 +112,7 @@ export class App extends React.Component {
         if (this.state.error) {
             return (
                 <div className={classes.loaderWrapper}>
-                    <div>An error occured while initializing the IronCore service. Please refresh and try again"</div>
+                    <div>An error occured while initializing the IronCore service. Please refresh and try again.</div>
                 </div>
             );
         }

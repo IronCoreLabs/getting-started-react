@@ -4,18 +4,17 @@ import {changeActiveUser} from "../actions/UserActions";
 import AwayTeamManagement from "../components/AwayTeamManagement";
 import {Users} from "../Constants";
 import {stylesListToClassNames} from "../lib/Utils";
-import logo from "../logo-black.svg";
 import AvatarHoverAction from "./AvatarHoverAction";
 
 const classes = stylesListToClassNames({
     nav: {
-        alignItems: "center",
-        borderBottom: ".5px solid #CCC",
+        alignItems: "flex-start",
         color: "#8F8F8F",
         display: "flex",
         fontWeight: 400,
         justifyContent: "space-between",
-        padding: "10px 30px",
+        paddingTop: "10px",
+        paddingLeft: "30px",
     },
     activeUser: {
         alignItems: "center",
@@ -29,8 +28,6 @@ const classes = stylesListToClassNames({
         display: "none",
         padding: "20px 20px 0px 20px",
         position: "absolute",
-        right: 20,
-        top: "65px !important",
         width: 320,
         zIndex: 30,
     },
@@ -104,7 +101,7 @@ const classes = stylesListToClassNames({
     rightSection: {
         alignItems: "center",
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "column",
     },
 });
 
@@ -193,21 +190,19 @@ class Header extends React.Component {
     render() {
         return (
             <header className={classes.nav}>
-                <div className={classes.titleContainer}>
-                    <img src={logo} height="40" width="40" alt="" />
-                    <h1 className={classes.ironTitle}>Iron</h1>
-                    <h1>React</h1>
-                </div>
                 <div className={classes.rightSection}>
-                    <AwayTeamManagement />
                     <div className={classes.activeUser} onClick={this.showDropdown.bind(this)}>
                         <div className={classes.userDescription}>
-                            <p className={classes.actingAs}>Acting as:</p>
-                            <p className={classes.activeUserName}> {this.props.activeUser.name}</p>
+                            <p className={classes.actingAs}>
+                                Acting as: <span className={classes.activeUserName}>{this.props.activeUser.name}</span>
+                            </p>
                         </div>
                         <AvatarHoverAction src={this.props.activeUser.img} size={40} />
-                        <div className={`${classes.dropdown} ${this.state.dropdownOpen ? classes.dropdownShow : ""}`}>{this.getDropDownMarkup()}</div>
+                        <div>
+                            <div className={`${classes.dropdown} ${this.state.dropdownOpen ? classes.dropdownShow : ""}`}>{this.getDropDownMarkup()}</div>
+                        </div>
                     </div>
+                    <AwayTeamManagement />
                 </div>
             </header>
         );

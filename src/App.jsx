@@ -8,6 +8,48 @@ import { initializeAsUser, getTestGroupDetails } from "./lib/Initialization";
 import { KIRK } from "./Constants";
 import { stylesListToClassNames } from "./lib/Utils";
 import logo from "./logo-black.svg";
+import {keyframes} from "@emotion/react";
+import {css} from "@emotion/css";
+
+const rotate = keyframes`
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+`;
+
+const initLoader = css`
+    position: relative;
+    &:before {
+        animation: ${rotate} 1.5s infinite;
+        border-bottom: 5px solid transparent;
+        border-left: 5px solid transparent;
+        border-radius: 50%;
+        border-right: 5px solid transparent;
+        border-top: 5px solid #ee2e2a;
+        content: "";
+        height: 60px;
+        position: absolute;
+        width: 60px;
+        z-index: 9;
+    }
+`;
+
+const rootStyles = css`
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+
+    header {
+        flex: 0 1 auto;
+    }
+
+    main {
+        flex: 1 1 auto;
+    }
+`;
 
 const classes = stylesListToClassNames({
     main: {
@@ -45,9 +87,9 @@ export class App extends React.Component {
             .then(() => getTestGroupDetails())
             .then((group) => {
                 this.props.setAwayTeam(group);
-                this.setState({ initializing: false, error: false });
+                this.setState({initializing: false, error: false});
             })
-            .catch(() => this.setState({ initializing: false, error: true }));
+            .catch(() => this.setState({initializing: false, error: true}));
     }
 
     /**
@@ -56,7 +98,7 @@ export class App extends React.Component {
     getInitializingMarkup() {
         return (
             <div className={classes.loaderWrapper}>
-                <div id="initLoader">
+                <div className={initLoader}>
                     <img src={logo} height="70" width="70" alt="" />
                 </div>
             </div>
@@ -70,20 +112,20 @@ export class App extends React.Component {
         if (this.state.error) {
             return (
                 <div className={classes.loaderWrapper}>
-                    <div>An error occured while initializing the IronCore service. Please refresh and try again"</div>
+                    <div>An error occured while initializing the IronCore service. Please refresh and try again.</div>
                 </div>
             );
         }
         return (
-            <React.Fragment>
+            <div className={rootStyles}>
                 <Header />
                 <main className={classes.main}>
-                    <div className={classes.orderSection}>
+                    <div className={classes.orderSection} id="dcp-gs-chunk">
                         <NewOrderForm />
                         <OrderList />
                     </div>
                 </main>
-            </React.Fragment>
+            </div>
         );
     }
 }

@@ -17,10 +17,12 @@ const classes = stylesListToClassNames({
         padding: 22,
         top: 0,
     },
-    section: {padding: 22},
+    section: {padding: 22, height: "300px", overflowY: "auto"},
     mainHeaderText: {
         color: "#000",
         fontWeight: "bold",
+        fontSize: "24px",
+        marginBottom: "5px",
     },
     headerText: {
         color: "#929292",
@@ -42,13 +44,12 @@ const classes = stylesListToClassNames({
         background: "#FFF",
         boxShadow: "2px 2px 4px 0 rgba(0, 0, 0, 0.50)",
         display: "none",
-        height: "100vh",
-        maxWidth: 430,
-        minWidth: 300,
-        position: "fixed",
-        right: 0,
-        top: 0,
-        width: "50%",
+        width: "400px",
+        minWidth: "300px",
+        position: "absolute",
+        left: "50%",
+        top: "50%",
+        transform: "translate(-50%, -50%)",
         zIndex: 20,
     },
     menuOpen: {display: "block"},
@@ -83,9 +84,8 @@ const classes = stylesListToClassNames({
     toggleMenuButton: {
         color: "#0ABFD6",
         cursor: "pointer",
-        fontSize: 16,
+        fontSize: 12,
         letterSpacing: ".05em",
-        marginRight: 30,
         textAlign: "right",
         textTransform: "uppercase",
     },
@@ -190,7 +190,9 @@ class AwayTeamManagement extends React.Component {
             <div className={`${classes.sideBar} ${this.state.menuOpen ? classes.menuOpen : ""}`}>
                 <div className={classes.header}>
                     <h2 className={classes.mainHeaderText}>Away Team Management</h2>
-                    <i className="fas fa-times" onClick={() => this.toggleMenuOpen()} />
+                    <div onClick={() => this.toggleMenuOpen()}>
+                        <i className="fas fa-times" />
+                    </div>
                 </div>
                 <div className={classes.section}>
                     <div className={classes.headerText}>Away-Team Group Members</div>
@@ -207,12 +209,12 @@ class AwayTeamManagement extends React.Component {
             return null;
         }
         return (
-            <React.Fragment>
-                <h2 onClick={() => this.toggleMenuOpen()} className={classes.toggleMenuButton}>
+            <div>
+                <h3 onClick={() => this.toggleMenuOpen()} className={classes.toggleMenuButton}>
                     Manage Away Team
-                </h2>
+                </h3>
                 {this.state.menuOpen ? this.getMenuMarkup() : ""}
-            </React.Fragment>
+            </div>
         );
     }
 }
